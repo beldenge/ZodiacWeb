@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+	'-//Hibernate/Hibernate Configuration DTD 3.0//EN'
+	'http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd'>
+
+<hibernate-configuration>
+
+	<session-factory>
+
+		<mapping package='com.ciphertool.zodiacengine.entities' />
+
+		<mapping class='com.ciphertool.zodiacengine.entities.Cipher' />
+		<mapping class='com.ciphertool.zodiacengine.entities.Ciphertext' />
+		<mapping class='com.ciphertool.zodiacengine.entities.SolutionSet' />
+		<mapping class='com.ciphertool.zodiacengine.entities.Solution' />
+		<mapping class='com.ciphertool.zodiacengine.entities.Plaintext' />
+		<mapping class='com.ciphertool.sentencebuilder.entities.Word' />
+
+	</session-factory>
+
+</hibernate-configuration>
