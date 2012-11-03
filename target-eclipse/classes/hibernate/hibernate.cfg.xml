@@ -7,8 +7,6 @@
 
 	<session-factory>
 
-		<mapping package='com.ciphertool.zodiacengine.entities' />
-
 		<mapping class='com.ciphertool.zodiacengine.entities.Cipher' />
 		<mapping class='com.ciphertool.zodiacengine.entities.Ciphertext' />
 		<mapping class='com.ciphertool.zodiacengine.entities.SolutionSet' />
