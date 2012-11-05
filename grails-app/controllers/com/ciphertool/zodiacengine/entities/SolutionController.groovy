@@ -30,8 +30,8 @@ class SolutionController {
         redirect(action: "show", id: solutionInstance.id)
     }
 
-    def show(Long id) {
-        def solutionInstance = Solution.get(id)
+    def show(params) {
+        def solutionInstance = Solution.findById(new SolutionId(params.solutionId as int, new SolutionSet(params.solutionSetId as Integer)))
         if (!solutionInstance) {
             flash.message = message(code: 'default.not.found.message', args: [message(code: 'solution.label', default: 'Solution'), id])
             redirect(action: "list")

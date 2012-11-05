@@ -26,10 +26,6 @@
 					
 						<g:sortableColumn property="frequencyWeight" title="${message(code: 'word.frequencyWeight.label', default: 'Frequency Weight')}" />
 					
-						<g:sortableColumn property="partOfSpeech" title="${message(code: 'word.partOfSpeech.label', default: 'Part Of Speech')}" />
-					
-						<g:sortableColumn property="word" title="${message(code: 'word.word.label', default: 'Word')}" />
-					
 					</tr>
 				</thead>
 				<tbody>
@@ -37,10 +33,6 @@
 					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
 					
 						<td><g:link action="show" id="${wordInstance.id}">${fieldValue(bean: wordInstance, field: "frequencyWeight")}</g:link></td>
-					
-						<td>${fieldValue(bean: wordInstance, field: "partOfSpeech")}</td>
-					
-						<td>${fieldValue(bean: wordInstance, field: "word")}</td>
 					
 					</tr>
 				</g:each>

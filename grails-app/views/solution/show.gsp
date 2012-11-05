@@ -61,24 +61,6 @@
 				</li>
 				</g:if>
 			
-				<g:if test="${solutionInstance?.solutionId}">
-				<li class="fieldcontain">
-					<span id="solutionId-label" class="property-label"><g:message code="solution.solutionId.label" default="Solution Id" /></span>
-					
-						<span class="property-value" aria-labelledby="solutionId-label"><g:fieldValue bean="${solutionInstance}" field="solutionId"/></span>
-					
-				</li>
-				</g:if>
-			
-				<g:if test="${solutionInstance?.solutionSet}">
-				<li class="fieldcontain">
-					<span id="solutionSet-label" class="property-label"><g:message code="solution.solutionSet.label" default="Solution Set" /></span>
-					
-						<span class="property-value" aria-labelledby="solutionSet-label"><g:link controller="solutionSet" action="show" id="${solutionInstance?.solutionSet?.id}">${solutionInstance?.solutionSet?.encodeAsHTML()}</g:link></span>
-					
-				</li>
-				</g:if>
-			
 				<g:if test="${solutionInstance?.totalMatches}">
 				<li class="fieldcontain">
 					<span id="totalMatches-label" class="property-label"><g:message code="solution.totalMatches.label" default="Total Matches" /></span>

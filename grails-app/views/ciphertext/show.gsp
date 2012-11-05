@@ -23,24 +23,6 @@
 			</g:if>
 			<ol class="property-list ciphertext">
 			
-				<g:if test="${ciphertextInstance?.cipher}">
-				<li class="fieldcontain">
-					<span id="cipher-label" class="property-label"><g:message code="ciphertext.cipher.label" default="Cipher" /></span>
-					
-						<span class="property-value" aria-labelledby="cipher-label"><g:link controller="cipher" action="show" id="${ciphertextInstance?.cipher?.id}">${ciphertextInstance?.cipher?.encodeAsHTML()}</g:link></span>
-					
-				</li>
-				</g:if>
-			
-				<g:if test="${ciphertextInstance?.ciphertextId}">
-				<li class="fieldcontain">
-					<span id="ciphertextId-label" class="property-label"><g:message code="ciphertext.ciphertextId.label" default="Ciphertext Id" /></span>
-					
-						<span class="property-value" aria-labelledby="ciphertextId-label"><g:fieldValue bean="${ciphertextInstance}" field="ciphertextId"/></span>
-					
-				</li>
-				</g:if>
-			
 				<g:if test="${ciphertextInstance?.value}">
 				<li class="fieldcontain">
 					<span id="value-label" class="property-label"><g:message code="ciphertext.value.label" default="Value" /></span>

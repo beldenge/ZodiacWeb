@@ -23,12 +23,21 @@
 			</g:if>
 			<ol class="property-list solutionSet">
 			
+				<g:if test="${solutionSetInstance?.name}">
+				<li class="fieldcontain">
+					<span id="name-label" class="property-label"><g:message code="solutionSet.name.label" default="Name" /></span>
+					
+						<span class="property-value" aria-labelledby="name-label"><g:fieldValue bean="${solutionSetInstance}" field="name"/></span>
+					
+				</li>
+				</g:if>
+			
 				<g:if test="${solutionSetInstance?.solutions}">
 				<li class="fieldcontain">
 					<span id="solutions-label" class="property-label"><g:message code="solutionSet.solutions.label" default="Solutions" /></span>
 					
 						<g:each in="${solutionSetInstance.solutions}" var="s">
-						<span class="property-value" aria-labelledby="solutions-label"><g:link controller="solution" action="show" id="${s.id}">${s?.encodeAsHTML()}</g:link></span>
+						<span class="property-value" aria-labelledby="solutions-label"><g:link controller="solution" action="show" params="[solutionId: s?.id.solutionId, solutionSetId: s?.id.solutionSet.id]">${s?.id.solutionId.encodeAsHTML()}</g:link></span>
 						</g:each>
 					
 				</li>

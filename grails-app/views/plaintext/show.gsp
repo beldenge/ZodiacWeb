@@ -23,29 +23,11 @@
 			</g:if>
 			<ol class="property-list plaintext">
 			
-				<g:if test="${plaintextInstance?.ciphertextId}">
-				<li class="fieldcontain">
-					<span id="ciphertextId-label" class="property-label"><g:message code="plaintext.ciphertextId.label" default="Ciphertext Id" /></span>
-					
-						<span class="property-value" aria-labelledby="ciphertextId-label"><g:fieldValue bean="${plaintextInstance}" field="ciphertextId"/></span>
-					
-				</li>
-				</g:if>
-			
 				<g:if test="${plaintextInstance?.hasMatch}">
 				<li class="fieldcontain">
 					<span id="hasMatch-label" class="property-label"><g:message code="plaintext.hasMatch.label" default="Has Match" /></span>
 					
 						<span class="property-value" aria-labelledby="hasMatch-label"><g:formatBoolean boolean="${plaintextInstance?.hasMatch}" /></span>
-					
-				</li>
-				</g:if>
-			
-				<g:if test="${plaintextInstance?.solution}">
-				<li class="fieldcontain">
-					<span id="solution-label" class="property-label"><g:message code="plaintext.solution.label" default="Solution" /></span>
-					
-						<span class="property-value" aria-labelledby="solution-label"><g:link controller="solution" action="show" id="${plaintextInstance?.solution?.id}">${plaintextInstance?.solution?.encodeAsHTML()}</g:link></span>
 					
 				</li>
 				</g:if>

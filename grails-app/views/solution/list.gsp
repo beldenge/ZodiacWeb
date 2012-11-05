@@ -30,11 +30,9 @@
 					
 						<g:sortableColumn property="cipherId" title="${message(code: 'solution.cipherId.label', default: 'Cipher Id')}" />
 					
-						<g:sortableColumn property="solutionId" title="${message(code: 'solution.solutionId.label', default: 'Solution Id')}" />
-					
-						<th><g:message code="solution.solutionSet.label" default="Solution Set" /></th>
-					
 						<g:sortableColumn property="totalMatches" title="${message(code: 'solution.totalMatches.label', default: 'Total Matches')}" />
+					
+						<g:sortableColumn property="uniqueMatches" title="${message(code: 'solution.uniqueMatches.label', default: 'Unique Matches')}" />
 					
 					</tr>
 				</thead>
@@ -48,11 +46,9 @@
 					
 						<td>${fieldValue(bean: solutionInstance, field: "cipherId")}</td>
 					
-						<td>${fieldValue(bean: solutionInstance, field: "solutionId")}</td>
-					
-						<td>${fieldValue(bean: solutionInstance, field: "solutionSet")}</td>
-					
 						<td>${fieldValue(bean: solutionInstance, field: "totalMatches")}</td>
+					
+						<td>${fieldValue(bean: solutionInstance, field: "uniqueMatches")}</td>
 					
 					</tr>
 				</g:each>

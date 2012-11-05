@@ -10,6 +10,14 @@
 	<g:field type="number" name="id" value="${solutionSetInstance.id}" />
 </div>
 
+<div class="fieldcontain ${hasErrors(bean: solutionSetInstance, field: 'name', 'error')} ">
+	<label for="name">
+		<g:message code="solutionSet.name.label" default="Name" />
+		
+	</label>
+	<g:textField name="name" value="${solutionSetInstance?.name}" />
+</div>
+
 <div class="fieldcontain ${hasErrors(bean: solutionSetInstance, field: 'solutions', 'error')} ">
 	<label for="solutions">
 		<g:message code="solutionSet.solutions.label" default="Solutions" />

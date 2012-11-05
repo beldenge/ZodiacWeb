@@ -7,7 +7,7 @@
 		<g:message code="solution.id.label" default="Id" />
 		
 	</label>
-	<g:field type="number" name="id" value="${solutionInstance.id}" />
+	
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: solutionInstance, field: 'adjacentMatchCount', 'error')} ">
@@ -40,22 +40,6 @@
 		
 	</label>
 	<g:select name="plaintextCharacters" from="${com.ciphertool.zodiacengine.entities.Plaintext.list()}" multiple="multiple" optionKey="id" size="5" required="" value="${solutionInstance?.plaintextCharacters*.id}" class="many-to-many"/>
-</div>
-
-<div class="fieldcontain ${hasErrors(bean: solutionInstance, field: 'solutionId', 'error')} ">
-	<label for="solutionId">
-		<g:message code="solution.solutionId.label" default="Solution Id" />
-		
-	</label>
-	<g:field type="number" name="solutionId" value="${solutionInstance.solutionId}" />
-</div>
-
-<div class="fieldcontain ${hasErrors(bean: solutionInstance, field: 'solutionSet', 'error')} ">
-	<label for="solutionSet">
-		<g:message code="solution.solutionSet.label" default="Solution Set" />
-		
-	</label>
-	<g:select id="solutionSet" name="solutionSet.id" from="${com.ciphertool.zodiacengine.entities.SolutionSet.list()}" optionKey="id" required="" value="${solutionInstance?.solutionSet?.id}" class="many-to-one"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: solutionInstance, field: 'totalMatches', 'error')} ">

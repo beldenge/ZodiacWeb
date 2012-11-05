@@ -24,11 +24,7 @@
 				<thead>
 					<tr>
 					
-						<g:sortableColumn property="ciphertextId" title="${message(code: 'plaintext.ciphertextId.label', default: 'Ciphertext Id')}" />
-					
 						<g:sortableColumn property="hasMatch" title="${message(code: 'plaintext.hasMatch.label', default: 'Has Match')}" />
-					
-						<th><g:message code="plaintext.solution.label" default="Solution" /></th>
 					
 						<g:sortableColumn property="value" title="${message(code: 'plaintext.value.label', default: 'Value')}" />
 					
@@ -38,11 +34,7 @@
 				<g:each in="${plaintextInstanceList}" status="i" var="plaintextInstance">
 					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
 					
-						<td><g:link action="show" id="${plaintextInstance.id}">${fieldValue(bean: plaintextInstance, field: "ciphertextId")}</g:link></td>
-					
-						<td><g:formatBoolean boolean="${plaintextInstance.hasMatch}" /></td>
-					
-						<td>${fieldValue(bean: plaintextInstance, field: "solution")}</td>
+						<td><g:link action="show" id="${plaintextInstance.id}">${fieldValue(bean: plaintextInstance, field: "hasMatch")}</g:link></td>
 					
 						<td>${fieldValue(bean: plaintextInstance, field: "value")}</td>
 					

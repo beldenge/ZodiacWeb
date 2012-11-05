@@ -32,24 +32,6 @@
 				</li>
 				</g:if>
 			
-				<g:if test="${wordInstance?.partOfSpeech}">
-				<li class="fieldcontain">
-					<span id="partOfSpeech-label" class="property-label"><g:message code="word.partOfSpeech.label" default="Part Of Speech" /></span>
-					
-						<span class="property-value" aria-labelledby="partOfSpeech-label"><g:fieldValue bean="${wordInstance}" field="partOfSpeech"/></span>
-					
-				</li>
-				</g:if>
-			
-				<g:if test="${wordInstance?.word}">
-				<li class="fieldcontain">
-					<span id="word-label" class="property-label"><g:message code="word.word.label" default="Word" /></span>
-					
-						<span class="property-value" aria-labelledby="word-label"><g:fieldValue bean="${wordInstance}" field="word"/></span>
-					
-				</li>
-				</g:if>
-			
 			</ol>
 			<g:form>
 				<fieldset class="buttons">

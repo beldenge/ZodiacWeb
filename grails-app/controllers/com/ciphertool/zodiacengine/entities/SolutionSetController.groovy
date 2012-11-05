@@ -31,7 +31,7 @@ class SolutionSetController {
     }
 
     def show(Long id) {
-        def solutionSetInstance = SolutionSet.get(id)
+        def solutionSetInstance = SolutionSet.findById(id, [fetch: [solutions: "eager"]])
         if (!solutionSetInstance) {
             flash.message = message(code: 'default.not.found.message', args: [message(code: 'solutionSet.label', default: 'SolutionSet'), id])
             redirect(action: "list")

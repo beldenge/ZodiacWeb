@@ -11,8 +11,8 @@ class CipherController {
     }
 
     def list(Integer max) {
-        params.max = Math.min(max ?: 10, 100)
-        [cipherInstanceList: Cipher.list(params), cipherInstanceTotal: Cipher.count()]
+        def maxResults = Math.min(max ?: 10, 100)
+        [cipherInstanceList: Cipher.list(max:maxResults, fetch:[ciphertextCharacters: "lazy"]), cipherInstanceTotal: Cipher.count()]
     }
 
     def create() {

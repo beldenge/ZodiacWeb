@@ -24,10 +24,6 @@
 				<thead>
 					<tr>
 					
-						<th><g:message code="ciphertext.cipher.label" default="Cipher" /></th>
-					
-						<g:sortableColumn property="ciphertextId" title="${message(code: 'ciphertext.ciphertextId.label', default: 'Ciphertext Id')}" />
-					
 						<g:sortableColumn property="value" title="${message(code: 'ciphertext.value.label', default: 'Value')}" />
 					
 					</tr>
@@ -36,11 +32,7 @@
 				<g:each in="${ciphertextInstanceList}" status="i" var="ciphertextInstance">
 					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
 					
-						<td><g:link action="show" id="${ciphertextInstance.id}">${fieldValue(bean: ciphertextInstance, field: "cipher")}</g:link></td>
-					
-						<td>${fieldValue(bean: ciphertextInstance, field: "ciphertextId")}</td>
-					
-						<td>${fieldValue(bean: ciphertextInstance, field: "value")}</td>
+						<td><g:link action="show" id="${ciphertextInstance.id}">${fieldValue(bean: ciphertextInstance, field: "value")}</g:link></td>
 					
 					</tr>
 				</g:each>
