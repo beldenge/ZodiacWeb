@@ -31,7 +31,8 @@ class CiphertextController {
     }
 
     def show(Long id) {
-        def ciphertextInstance = Ciphertext.get(id)
+		def cipher = new Cipher(params.cipherId as Integer)
+		def ciphertextInstance = Ciphertext.findById(new CiphertextId(cipher, params.ciphertextId as int))
         if (!ciphertextInstance) {
             flash.message = message(code: 'default.not.found.message', args: [message(code: 'ciphertext.label', default: 'Ciphertext'), id])
             redirect(action: "list")

@@ -11,8 +11,8 @@ class SolutionController {
     }
 
     def list(Integer max) {
-        params.max = Math.min(max ?: 10, 100)
-        [solutionInstanceList: Solution.list(params), solutionInstanceTotal: Solution.count()]
+        def maxResults = Math.min(max ?: 10, 100)
+        [solutionInstanceList: Solution.list(max:maxResults, fetch:[plaintextCharacters: "lazy"]), solutionInstanceTotal: Solution.count()]
     }
 
     def create() {
@@ -31,7 +31,7 @@ class SolutionController {
     }
 
     def show(params) {
-        def solutionInstance = Solution.findById(new SolutionId(params.solutionId as int, new SolutionSet(params.solutionSetId as Integer)))
+        def solutionInstance = Solution.findById(new SolutionId(new SolutionSet(params.solutionSetId as Integer), params.solutionId as int))
         if (!solutionInstance) {
             flash.message = message(code: 'default.not.found.message', args: [message(code: 'solution.label', default: 'Solution'), id])
             redirect(action: "list")

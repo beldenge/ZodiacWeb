@@ -23,26 +23,6 @@
 			</g:if>
 			<ol class="property-list cipher">
 			
-				<g:if test="${cipherInstance?.ciphertextCharacters}">
-				<li class="fieldcontain">
-					<span id="ciphertextCharacters-label" class="property-label"><g:message code="cipher.ciphertextCharacters.label" default="Ciphertext Characters" /></span>
-					
-						<g:each in="${cipherInstance.ciphertextCharacters}" var="c">
-						<span class="property-value" aria-labelledby="ciphertextCharacters-label"><g:link controller="ciphertext" action="show" id="${c.id}">${c?.encodeAsHTML()}</g:link></span>
-						</g:each>
-					
-				</li>
-				</g:if>
-			
-				<g:if test="${cipherInstance?.columns}">
-				<li class="fieldcontain">
-					<span id="columns-label" class="property-label"><g:message code="cipher.columns.label" default="Columns" /></span>
-					
-						<span class="property-value" aria-labelledby="columns-label"><g:fieldValue bean="${cipherInstance}" field="columns"/></span>
-					
-				</li>
-				</g:if>
-			
 				<g:if test="${cipherInstance?.name}">
 				<li class="fieldcontain">
 					<span id="name-label" class="property-label"><g:message code="cipher.name.label" default="Name" /></span>
@@ -57,6 +37,40 @@
 					<span id="rows-label" class="property-label"><g:message code="cipher.rows.label" default="Rows" /></span>
 					
 						<span class="property-value" aria-labelledby="rows-label"><g:fieldValue bean="${cipherInstance}" field="rows"/></span>
+					
+				</li>
+				</g:if>
+				
+				<g:if test="${cipherInstance?.columns}">
+				<li class="fieldcontain">
+					<span id="columns-label" class="property-label"><g:message code="cipher.columns.label" default="Columns" /></span>
+					
+						<span class="property-value" aria-labelledby="columns-label"><g:fieldValue bean="${cipherInstance}" field="columns"/></span>
+					
+				</li>
+				</g:if>
+				
+				<g:if test="${cipherInstance?.ciphertextCharacters}">
+				<li class="fieldcontain">
+					<span id="ciphertextCharacters-label" class="property-label"><g:message code="cipher.ciphertextCharacters.label" default="Ciphertext Characters" /></span>
+					
+					<table>
+					<tr>
+					<g:each in="${ (1..cipherInstance.ciphertextCharacters.size()) }">
+						<g:set var="c" value="${cipherInstance.ciphertextCharacters.getAt(it - 1)}" />
+						<td>
+						<span class="property-value" aria-labelledby="ciphertextCharacters-label">
+							<g:link controller="ciphertext" action="show" params="[cipherId: c?.id.cipher.id, ciphertextId: c?.id.ciphertextId]">
+								<g:img dir="images/cipher" file="${c.value.encodeAsHTML()}.gif" />
+							</g:link>
+						</span>
+						</td>
+						<g:if test="${(it % cipherInstance.columns) == 0}">
+							</tr><tr>
+						</g:if>
+					</g:each>
+					</tr>
+					</table>
 					
 				</li>
 				</g:if>

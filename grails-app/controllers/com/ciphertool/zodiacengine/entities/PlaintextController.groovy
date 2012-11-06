@@ -30,8 +30,9 @@ class PlaintextController {
         redirect(action: "show", id: plaintextInstance.id)
     }
 
-    def show(Long id) {
-        def plaintextInstance = Plaintext.get(id)
+    def show(params) {
+		def solution = new Solution(new SolutionSet(params.solutionSetId as Integer), params.solutionId as int)
+		def plaintextInstance = Plaintext.findById(new PlaintextId(solution, params.ciphertextId as int))
         if (!plaintextInstance) {
             flash.message = message(code: 'default.not.found.message', args: [message(code: 'plaintext.label', default: 'Plaintext'), id])
             redirect(action: "list")
