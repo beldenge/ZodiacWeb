@@ -23,52 +23,41 @@
 			</g:if>
 			<ol class="property-list solution">
 			
-				<g:if test="${solutionInstance?.id}">
 				<li class="fieldcontain">
 					<span id="id-label" class="property-label"><g:message code="solution.id.label" default="Solution Id" /></span>
 					
 						<span class="property-value" aria-labelledby="id-label"><g:fieldValue bean="${solutionInstance}" field="id"/></span>
 					
 				</li>
-				</g:if>
 			
-				<g:if test="${solutionInstance?.totalMatches}">
 				<li class="fieldcontain">
 					<span id="totalMatches-label" class="property-label"><g:message code="solution.totalMatches.label" default="Total Matches" /></span>
 					
 						<span class="property-value" aria-labelledby="totalMatches-label"><g:fieldValue bean="${solutionInstance}" field="totalMatches"/></span>
 					
 				</li>
-				</g:if>
 			
-				<g:if test="${solutionInstance?.uniqueMatches}">
 				<li class="fieldcontain">
 					<span id="uniqueMatches-label" class="property-label"><g:message code="solution.uniqueMatches.label" default="Unique Matches" /></span>
 					
 						<span class="property-value" aria-labelledby="uniqueMatches-label"><g:fieldValue bean="${solutionInstance}" field="uniqueMatches"/></span>
 					
 				</li>
-				</g:if>
 			
-				<g:if test="${solutionInstance?.adjacentMatchCount}">
 				<li class="fieldcontain">
 					<span id="adjacentMatchCount-label" class="property-label"><g:message code="solution.adjacentMatchCount.label" default="Adjacent Match Count" /></span>
 					
 						<span class="property-value" aria-labelledby="adjacentMatchCount-label"><g:fieldValue bean="${solutionInstance}" field="adjacentMatchCount"/></span>
 					
 				</li>
-				</g:if>
 			
-				<g:if test="${solutionInstance?.cipher}">
 				<li class="fieldcontain">
 					<span id="cipher-label" class="property-label"><g:message code="solution.cipher.label" default="Cipher" /></span>
 					
 						<span class="property-value" aria-labelledby="cipher-label"><g:link controller="cipher" action="show" id="${solutionInstance?.cipher?.id}">${solutionInstance?.cipher?.name.encodeAsHTML()}</g:link></span>
 					
 				</li>
-				</g:if>
 			
-				<g:if test="${solutionInstance?.plaintextCharacters}">
 				<li class="fieldcontain">
 					<span id="plaintextCharacters-label" class="property-label"><g:message code="solution.plaintextCharacters.label" default="Plaintext Characters" /></span>
 					
@@ -95,7 +84,6 @@
 					</tr>
 					</table>
 				</li>
-				</g:if>
 			
 			</ol>
 			<g:form>

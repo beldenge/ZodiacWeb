@@ -23,14 +23,12 @@
 			</g:if>
 			<ol class="property-list ciphertext">
 			
-				<g:if test="${ciphertextInstance?.value}">
 				<li class="fieldcontain">
 					<span id="value-label" class="property-label"><g:message code="ciphertext.value.label" default="Value" /></span>
 					
 						<span class="property-value" aria-labelledby="value-label"><g:fieldValue bean="${ciphertextInstance}" field="value"/></span>
 					
 				</li>
-				</g:if>
 			
 			</ol>
 			<g:form>

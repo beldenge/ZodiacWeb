@@ -30,8 +30,8 @@ class WordController {
         redirect(action: "show", id: wordInstance.id)
     }
 
-    def show(Long id) {
-        def wordInstance = Word.get(id)
+    def show() {
+        def wordInstance = Word.findById(new WordId(params.word, params.partOfSpeech.charAt(0)))
         if (!wordInstance) {
             flash.message = message(code: 'default.not.found.message', args: [message(code: 'word.label', default: 'Word'), id])
             redirect(action: "list")

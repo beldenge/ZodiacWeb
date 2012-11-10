@@ -23,34 +23,27 @@
 			</g:if>
 			<ol class="property-list cipher">
 			
-				<g:if test="${cipherInstance?.name}">
 				<li class="fieldcontain">
 					<span id="name-label" class="property-label"><g:message code="cipher.name.label" default="Name" /></span>
 					
 						<span class="property-value" aria-labelledby="name-label"><g:fieldValue bean="${cipherInstance}" field="name"/></span>
 					
 				</li>
-				</g:if>
 			
-				<g:if test="${cipherInstance?.rows}">
 				<li class="fieldcontain">
 					<span id="rows-label" class="property-label"><g:message code="cipher.rows.label" default="Rows" /></span>
 					
 						<span class="property-value" aria-labelledby="rows-label"><g:fieldValue bean="${cipherInstance}" field="rows"/></span>
 					
 				</li>
-				</g:if>
 				
-				<g:if test="${cipherInstance?.columns}">
 				<li class="fieldcontain">
 					<span id="columns-label" class="property-label"><g:message code="cipher.columns.label" default="Columns" /></span>
 					
 						<span class="property-value" aria-labelledby="columns-label"><g:fieldValue bean="${cipherInstance}" field="columns"/></span>
 					
 				</li>
-				</g:if>
 				
-				<g:if test="${cipherInstance?.ciphertextCharacters}">
 				<li class="fieldcontain">
 					<span id="ciphertextCharacters-label" class="property-label"><g:message code="cipher.ciphertextCharacters.label" default="Ciphertext Characters" /></span>
 					
@@ -73,7 +66,6 @@
 					</table>
 					
 				</li>
-				</g:if>
 			
 			</ol>
 			<g:form>

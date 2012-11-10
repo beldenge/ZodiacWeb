@@ -24,6 +24,10 @@
 				<thead>
 					<tr>
 					
+						<g:sortableColumn property="value" title="${message(code: 'word.id.word.label', default: 'Word')}" />
+					
+						<g:sortableColumn property="partOfSpeech" title="${message(code: 'word.id.partOfSpeech.label', default: 'Part Of Speech')}" />
+					
 						<g:sortableColumn property="frequencyWeight" title="${message(code: 'word.frequencyWeight.label', default: 'Frequency Weight')}" />
 					
 					</tr>
@@ -32,7 +36,11 @@
 				<g:each in="${wordInstanceList}" status="i" var="wordInstance">
 					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
 					
-						<td><g:link action="show" id="${wordInstance.id}">${fieldValue(bean: wordInstance, field: "frequencyWeight")}</g:link></td>
+						<td><g:link action="show" params="[word: wordInstance?.id.word, partOfSpeech: wordInstance?.id.partOfSpeech]" >${fieldValue(bean: wordInstance, field: "id.word")}</g:link></td>
+						
+						<td>${fieldValue(bean: wordInstance, field: "id.partOfSpeech")}</td>
+						
+						<td>${fieldValue(bean: wordInstance, field: "frequencyWeight")}</td>
 					
 					</tr>
 				</g:each>

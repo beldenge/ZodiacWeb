@@ -23,20 +23,28 @@
 			<table>
 				<thead>
 					<tr>
-					
-						<g:sortableColumn property="hasMatch" title="${message(code: 'plaintext.hasMatch.label', default: 'Has Match')}" />
-					
+						
 						<g:sortableColumn property="value" title="${message(code: 'plaintext.value.label', default: 'Value')}" />
 					
+						<g:sortableColumn property="hasMatch" title="${message(code: 'plaintext.hasMatch.label', default: 'Has Match')}" />
+						
+						<g:sortableColumn property="id.solution" title="${message(code: 'plaintext.id.solution.label', default: 'Solution')}" />
+						
+						<g:sortableColumn property="id.ciphertextId" title="${message(code: 'plaintext.id.ciphertext.label', default: 'Ciphertext')}" />
+
 					</tr>
 				</thead>
 				<tbody>
 				<g:each in="${plaintextInstanceList}" status="i" var="plaintextInstance">
 					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
 					
-						<td><g:link action="show" id="${plaintextInstance.id}">${fieldValue(bean: plaintextInstance, field: "hasMatch")}</g:link></td>
+						<td><g:link action="show" params="[solutionSetId: plaintextInstance?.id.solution.id.solutionSet.id, solutionId: plaintextInstance?.id.solution.id.solutionId, ciphertextId: plaintextInstance?.id.ciphertextId]">${fieldValue(bean: plaintextInstance, field: "value")}</g:link></td>
 					
-						<td>${fieldValue(bean: plaintextInstance, field: "value")}</td>
+						<td>${fieldValue(bean: plaintextInstance, field: "hasMatch")}</td>
+						
+						<td><g:link controller="solution" action="show" params="[solutionId: plaintextInstance?.id.solution.id.solutionId, solutionSetId: plaintextInstance?.id.solution.id.solutionSet.id]">${fieldValue(bean: plaintextInstance, field: "id.solution.id.solutionId")}</g:link></td>
+						
+						<td><g:link controller="ciphertext" action="show" params="[cipherId: plaintextInstance?.id.solution.cipher.id, ciphertextId: plaintextInstance?.id.ciphertextId]"><g:img dir="images/cipher" file="${plaintextInstance?.id.solution.cipher.ciphertextCharacters.getAt(plaintextInstance?.id.ciphertextId).value.encodeAsHTML()}.gif" /></g:link></td>
 					
 					</tr>
 				</g:each>

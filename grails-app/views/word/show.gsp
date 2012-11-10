@@ -22,15 +22,27 @@
 			<div class="message" role="status">${flash.message}</div>
 			</g:if>
 			<ol class="property-list word">
+
+				<li class="fieldcontain">
+					<span id="word-label" class="property-label"><g:message code="word.id.word.label" default="Word" /></span>
+					
+						<span class="property-value" aria-labelledby="word-label"><g:fieldValue bean="${wordInstance}" field="id.word"/></span>
+					
+				</li>
+				
+				<li class="fieldcontain">
+					<span id="partOfSpeech-label" class="property-label"><g:message code="word.id.partOfSpeech.label" default="Part Of Speech" /></span>
+					
+						<span class="property-value" aria-labelledby="partOfSpeech-label"><g:fieldValue bean="${wordInstance}" field="id.partOfSpeech"/></span>
+					
+				</li>
 			
-				<g:if test="${wordInstance?.frequencyWeight}">
 				<li class="fieldcontain">
 					<span id="frequencyWeight-label" class="property-label"><g:message code="word.frequencyWeight.label" default="Frequency Weight" /></span>
 					
 						<span class="property-value" aria-labelledby="frequencyWeight-label"><g:fieldValue bean="${wordInstance}" field="frequencyWeight"/></span>
 					
 				</li>
-				</g:if>
 			
 			</ol>
 			<g:form>

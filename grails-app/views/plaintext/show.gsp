@@ -23,24 +23,34 @@
 			</g:if>
 			<ol class="property-list plaintext">
 			
-				<g:if test="${plaintextInstance?.hasMatch}">
-				<li class="fieldcontain">
-					<span id="hasMatch-label" class="property-label"><g:message code="plaintext.hasMatch.label" default="Has Match" /></span>
-					
-						<span class="property-value" aria-labelledby="hasMatch-label"><g:formatBoolean boolean="${plaintextInstance?.hasMatch}" /></span>
-					
-				</li>
-				</g:if>
-			
-				<g:if test="${plaintextInstance?.value}">
 				<li class="fieldcontain">
 					<span id="value-label" class="property-label"><g:message code="plaintext.value.label" default="Value" /></span>
 					
-						<span class="property-value" aria-labelledby="value-label"><g:fieldValue bean="${plaintextInstance}" field="value"/></span>
+					<span class="property-value" aria-labelledby="value-label"><g:fieldValue bean="${plaintextInstance}" field="value"/></span>
 					
 				</li>
-				</g:if>
 			
+				<li class="fieldcontain">
+					<span id="hasMatch-label" class="property-label"><g:message code="plaintext.hasMatch.label" default="Has Match" /></span>
+					
+					<span class="property-value" aria-labelledby="hasMatch-label"><g:formatBoolean boolean="${plaintextInstance?.hasMatch}" /></span>
+					
+				</li>
+				
+				<li class="fieldcontain">
+					<span id="solution-label" class="property-label"><g:message code="plaintext.id.solution.label" default="Solution" /></span>
+					
+					<span class="property-value" aria-labelledby="solution-label"><g:link controller="solution" action="show" params="[solutionId: plaintextInstance?.id.solution.id.solutionId, solutionSetId: plaintextInstance?.id.solution.id.solutionSet.id]">${fieldValue(bean: plaintextInstance, field: "id.solution.id.solutionId")}</g:link></span>
+					
+				</li>
+				
+				<li class="fieldcontain">
+					<span id="ciphertextId-label" class="property-label"><g:message code="plaintext.id.ciphertextId.label" default="Ciphertext" /></span>
+					
+					<span class="property-value" aria-labelledby="ciphertextId-label"><g:link controller="ciphertext" action="show" params="[cipherId: plaintextInstance?.id.solution.cipher.id, ciphertextId: plaintextInstance?.id.ciphertextId]"><g:img dir="images/cipher" file="${plaintextInstance?.id.solution.cipher.ciphertextCharacters.getAt(plaintextInstance?.id.ciphertextId).value.encodeAsHTML()}.gif" /></g:link></span>
+					
+				</li>
+				
 			</ol>
 			<g:form>
 				<fieldset class="buttons">
