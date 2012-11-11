@@ -20,20 +20,22 @@ class WordController {
     }
 
     def save() {
-        def wordInstance = new Word(params)
+		def wordId = new WordId(params.word, params.partOfSpeech.charAt(0))
+        def wordInstance = new Word(wordId, params.frequencyWeight as int)
         if (!wordInstance.save(flush: true)) {
             render(view: "create", model: [wordInstance: wordInstance])
             return
         }
 
-        flash.message = message(code: 'default.created.message', args: [message(code: 'word.label', default: 'Word'), wordInstance.id])
-        redirect(action: "show", id: wordInstance.id)
+        flash.message = message(code: 'default.created.message', args: [message(code: 'word.label', default: 'Word'), wordId])
+        redirect(action: "show", params: [word:wordId.word, partOfSpeech:wordId.partOfSpeech])
     }
 
     def show() {
-        def wordInstance = Word.findById(new WordId(params.word, params.partOfSpeech.charAt(0)))
+		def wordId = new WordId(params.word, params.partOfSpeech.charAt(0))
+        def wordInstance = Word.findById(wordId)
         if (!wordInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'word.label', default: 'Word'), id])
+            flash.message = message(code: 'default.not.found.message', args: [message(code: 'word.label', default: 'Word'), wordId])
             redirect(action: "list")
             return
         }
@@ -41,10 +43,11 @@ class WordController {
         [wordInstance: wordInstance]
     }
 
-    def edit(Long id) {
-        def wordInstance = Word.get(id)
+    def edit() {
+		def wordId = new WordId(params.word, params.partOfSpeech.charAt(0))
+        def wordInstance = Word.findById(wordId)
         if (!wordInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'word.label', default: 'Word'), id])
+            flash.message = message(code: 'default.not.found.message', args: [message(code: 'word.label', default: 'Word'), wordId])
             redirect(action: "list")
             return
         }
@@ -52,22 +55,13 @@ class WordController {
         [wordInstance: wordInstance]
     }
 
-    def update(Long id, Long version) {
-        def wordInstance = Word.get(id)
+    def update() {
+		def wordId = new WordId(params.word, params.partOfSpeech.charAt(0))
+        def wordInstance = Word.findById(wordId)
         if (!wordInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'word.label', default: 'Word'), id])
+            flash.message = message(code: 'default.not.found.message', args: [message(code: 'word.label', default: 'Word'), wordId])
             redirect(action: "list")
             return
-        }
-
-        if (version != null) {
-            if (wordInstance.version > version) {
-                wordInstance.errors.rejectValue("version", "default.optimistic.locking.failure",
-                          [message(code: 'word.label', default: 'Word')] as Object[],
-                          "Another user has updated this Word while you were editing")
-                render(view: "edit", model: [wordInstance: wordInstance])
-                return
-            }
         }
 
         wordInstance.properties = params
@@ -77,26 +71,27 @@ class WordController {
             return
         }
 
-        flash.message = message(code: 'default.updated.message', args: [message(code: 'word.label', default: 'Word'), wordInstance.id])
-        redirect(action: "show", id: wordInstance.id)
+        flash.message = message(code: 'default.updated.message', args: [message(code: 'word.label', default: 'Word'), wordId])
+        redirect(action: "show", params: [word:wordId.word, partOfSpeech:wordId.partOfSpeech])
     }
 
-    def delete(Long id) {
-        def wordInstance = Word.get(id)
+    def delete() {
+		def wordId = new WordId(params.word, params.partOfSpeech.charAt(0))
+        def wordInstance = Word.findById(wordId)
         if (!wordInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'word.label', default: 'Word'), id])
+            flash.message = message(code: 'default.not.found.message', args: [message(code: 'word.label', default: 'Word'), wordId])
             redirect(action: "list")
             return
         }
 
         try {
             wordInstance.delete(flush: true)
-            flash.message = message(code: 'default.deleted.message', args: [message(code: 'word.label', default: 'Word'), id])
+            flash.message = message(code: 'default.deleted.message', args: [message(code: 'word.label', default: 'Word'), wordId])
             redirect(action: "list")
         }
         catch (DataIntegrityViolationException e) {
-            flash.message = message(code: 'default.not.deleted.message', args: [message(code: 'word.label', default: 'Word'), id])
-            redirect(action: "show", id: id)
+            flash.message = message(code: 'default.not.deleted.message', args: [message(code: 'word.label', default: 'Word'), wordId])
+            redirect(action: "show", params: [word:wordId.word, partOfSpeech:wordId.partOfSpeech])
         }
     }
 }

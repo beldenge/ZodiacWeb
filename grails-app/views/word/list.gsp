@@ -24,9 +24,9 @@
 				<thead>
 					<tr>
 					
-						<g:sortableColumn property="value" title="${message(code: 'word.id.word.label', default: 'Word')}" />
+						<g:sortableColumn property="id.word" title="${message(code: 'word.id.word.label', default: 'Word')}" />
 					
-						<g:sortableColumn property="partOfSpeech" title="${message(code: 'word.id.partOfSpeech.label', default: 'Part Of Speech')}" />
+						<g:sortableColumn property="id.partOfSpeech" title="${message(code: 'word.id.partOfSpeech.label', default: 'Part Of Speech')}" />
 					
 						<g:sortableColumn property="frequencyWeight" title="${message(code: 'word.frequencyWeight.label', default: 'Frequency Weight')}" />
 					
