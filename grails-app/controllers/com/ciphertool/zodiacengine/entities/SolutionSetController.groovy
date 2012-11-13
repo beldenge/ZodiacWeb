@@ -16,7 +16,7 @@ class SolutionSetController {
     }
 
     def create() {
-        [solutionSetInstance: new SolutionSet(params)]
+        [solutionSetInstance: new SolutionSet()]
     }
 
     def save() {

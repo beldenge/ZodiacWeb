@@ -16,7 +16,7 @@ class WordController {
     }
 
     def create() {
-        [wordInstance: new Word(params)]
+        [wordInstance: new Word()]
     }
 
     def save() {

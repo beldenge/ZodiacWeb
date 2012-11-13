@@ -16,7 +16,7 @@ class PlaintextController {
     }
 
     def create() {
-        [plaintextInstance: new Plaintext(params)]
+        [plaintextInstance: new Plaintext()]
     }
 
     def save() {

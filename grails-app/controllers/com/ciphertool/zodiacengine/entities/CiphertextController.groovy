@@ -16,7 +16,7 @@ class CiphertextController {
     }
 
     def create() {
-        [ciphertextInstance: new Ciphertext(params)]
+        [ciphertextInstance: new Ciphertext()]
     }
 
     def save() {

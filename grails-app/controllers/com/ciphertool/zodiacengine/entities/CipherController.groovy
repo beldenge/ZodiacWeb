@@ -16,11 +16,11 @@ class CipherController {
     }
 
     def create() {
-        [cipherInstance: new Cipher(params)]
+        [cipherInstance: new Cipher()]
     }
 
     def save() {
-        def cipherInstance = new Cipher(params)
+        def cipherInstance = new Cipher(params.name, params.rows as int, params.columns as int)
         if (!cipherInstance.save(flush: true)) {
             render(view: "create", model: [cipherInstance: cipherInstance])
             return
