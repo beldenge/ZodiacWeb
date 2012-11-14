@@ -32,7 +32,7 @@
 				<g:each in="${ciphertextInstanceList}" status="i" var="ciphertextInstance">
 					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
 					
-						<td><g:link action="show" id="${ciphertextInstance.id}">${fieldValue(bean: ciphertextInstance, field: "value")}</g:link></td>
+						<td><g:link action="show" params="[cipherId:ciphertextInstance?.id.cipher.id, ciphertextId:ciphertextInstance?.id.ciphertextId]">${fieldValue(bean: ciphertextInstance, field: "value")}</g:link></td>
 					
 					</tr>
 				</g:each>

@@ -20,17 +20,18 @@ class CiphertextController {
     }
 
     def save() {
-        def ciphertextInstance = new Ciphertext(params)
-        if (!ciphertextInstance.save(flush: true)) {
+		def ciphertextId = new CiphertextId(new Cipher(params.cipherId as Integer), params.ciphertextId as int)
+		def ciphertextInstance = new Ciphertext(ciphertextId, params.value)
+        if (!ciphertextInstance..save(flush: true, insert:true)) {
             render(view: "create", model: [ciphertextInstance: ciphertextInstance])
             return
         }
 
-        flash.message = message(code: 'default.created.message', args: [message(code: 'ciphertext.label', default: 'Ciphertext'), ciphertextInstance.id])
-        redirect(action: "show", id: ciphertextInstance.id)
+        flash.message = message(code: 'default.created.message', args: [message(code: 'ciphertext.label', default: 'Ciphertext'), ciphertextId])
+        redirect(action: "show", params: [cipherId:ciphertextId.cipher.id, ciphertextId:ciphertextId.ciphertextId])
     }
 
-    def show(Long id) {
+    def show() {
 		def cipher = new Cipher(params.cipherId as Integer)
 		def ciphertextInstance = Ciphertext.findById(new CiphertextId(cipher, params.ciphertextId as int))
         if (!ciphertextInstance) {
@@ -42,10 +43,11 @@ class CiphertextController {
         [ciphertextInstance: ciphertextInstance]
     }
 
-    def edit(Long id) {
-        def ciphertextInstance = Ciphertext.get(id)
+    def edit() {
+		def ciphertextId = new CiphertextId(new Cipher(params.cipherId as Integer), params.ciphertextId as int)
+        def ciphertextInstance = Ciphertext.findById(ciphertextId)
         if (!ciphertextInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'ciphertext.label', default: 'Ciphertext'), id])
+            flash.message = message(code: 'default.not.found.message', args: [message(code: 'ciphertext.label', default: 'Ciphertext'), ciphertextId])
             redirect(action: "list")
             return
         }
@@ -53,22 +55,13 @@ class CiphertextController {
         [ciphertextInstance: ciphertextInstance]
     }
 
-    def update(Long id, Long version) {
-        def ciphertextInstance = Ciphertext.get(id)
+    def update() {
+		def ciphertextId = new CiphertextId(new Cipher(params.cipherId as Integer), params.ciphertextId as int)
+        def ciphertextInstance = Ciphertext.findById(ciphertextId)
         if (!ciphertextInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'ciphertext.label', default: 'Ciphertext'), id])
+            flash.message = message(code: 'default.not.found.message', args: [message(code: 'ciphertext.label', default: 'Ciphertext'), ciphertextId])
             redirect(action: "list")
             return
-        }
-
-        if (version != null) {
-            if (ciphertextInstance.version > version) {
-                ciphertextInstance.errors.rejectValue("version", "default.optimistic.locking.failure",
-                          [message(code: 'ciphertext.label', default: 'Ciphertext')] as Object[],
-                          "Another user has updated this Ciphertext while you were editing")
-                render(view: "edit", model: [ciphertextInstance: ciphertextInstance])
-                return
-            }
         }
 
         ciphertextInstance.properties = params
@@ -79,25 +72,28 @@ class CiphertextController {
         }
 
         flash.message = message(code: 'default.updated.message', args: [message(code: 'ciphertext.label', default: 'Ciphertext'), ciphertextInstance.id])
-        redirect(action: "show", id: ciphertextInstance.id)
+        redirect(action: "show", params: [cipherId:ciphertextId.cipher.id, ciphertextId:ciphertextId.ciphertextId])
     }
 
-    def delete(Long id) {
-        def ciphertextInstance = Ciphertext.get(id)
+    def delete() {
+		def ciphertextId = new CiphertextId(new Cipher(params.cipherId as Integer), params.ciphertextId as int)
+        def ciphertextInstance = Ciphertext.findById(ciphertextId)
         if (!ciphertextInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'ciphertext.label', default: 'Ciphertext'), id])
+            flash.message = message(code: 'default.not.found.message', args: [message(code: 'ciphertext.label', default: 'Ciphertext'), ciphertextId])
             redirect(action: "list")
             return
         }
 
         try {
+			def cipher = ciphertextInstance.id.cipher
+			cipher.getCiphertextCharacters().remove(ciphertextInstance)
             ciphertextInstance.delete(flush: true)
-            flash.message = message(code: 'default.deleted.message', args: [message(code: 'ciphertext.label', default: 'Ciphertext'), id])
+            flash.message = message(code: 'default.deleted.message', args: [message(code: 'ciphertext.label', default: 'Ciphertext'), ciphertextId])
             redirect(action: "list")
         }
         catch (DataIntegrityViolationException e) {
-            flash.message = message(code: 'default.not.deleted.message', args: [message(code: 'ciphertext.label', default: 'Ciphertext'), id])
-            redirect(action: "show", id: id)
+            flash.message = message(code: 'default.not.deleted.message', args: [message(code: 'ciphertext.label', default: 'Ciphertext'), ciphertextId])
+            redirect(action: "show", params: [cipherId:ciphertextId.cipher.id, ciphertextId:ciphertextId.ciphertextId])
         }
     }
 }

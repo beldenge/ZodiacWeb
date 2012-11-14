@@ -22,7 +22,7 @@ class WordController {
     def save() {
 		def wordId = new WordId(params.word, params.partOfSpeech.charAt(0))
         def wordInstance = new Word(wordId, params.frequencyWeight as int)
-        if (!wordInstance.save(flush: true)) {
+        if (!wordInstance.save(flush: true, insert:true)) {
             render(view: "create", model: [wordInstance: wordInstance])
             return
         }

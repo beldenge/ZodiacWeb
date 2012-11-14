@@ -21,7 +21,7 @@ class SolutionSetController {
 
     def save() {
         def solutionSetInstance = new SolutionSet(params)
-        if (!solutionSetInstance.save(flush: true)) {
+        if (!solutionSetInstance.save(flush: true, insert:true)) {
             render(view: "create", model: [solutionSetInstance: solutionSetInstance])
             return
         }

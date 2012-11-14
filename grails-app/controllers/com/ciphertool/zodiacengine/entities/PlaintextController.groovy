@@ -21,7 +21,7 @@ class PlaintextController {
 
     def save() {
         def plaintextInstance = new Plaintext(params)
-        if (!plaintextInstance.save(flush: true)) {
+        if (!plaintextInstance.save(flush: true, insert:true)) {
             render(view: "create", model: [plaintextInstance: plaintextInstance])
             return
         }
