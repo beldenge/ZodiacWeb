@@ -29,9 +29,8 @@
 			</g:hasErrors>
 			<g:form method="post" >
 				<g:hiddenField name="id" value="${solutionSetInstance?.id}" />
-				<g:hiddenField name="version" value="${solutionSetInstance?.version}" />
 				<fieldset class="form">
-					<g:render template="form"/>
+					<g:render template="edit"/>
 				</fieldset>
 				<fieldset class="buttons">
 					<g:actionSubmit class="save" action="update" value="${message(code: 'default.button.update.label', default: 'Update')}" />

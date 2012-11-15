@@ -53,22 +53,12 @@ class PlaintextController {
         [plaintextInstance: plaintextInstance]
     }
 
-    def update(Long id, Long version) {
+    def update(Long id) {
         def plaintextInstance = Plaintext.get(id)
         if (!plaintextInstance) {
             flash.message = message(code: 'default.not.found.message', args: [message(code: 'plaintext.label', default: 'Plaintext'), id])
             redirect(action: "list")
             return
-        }
-
-        if (version != null) {
-            if (plaintextInstance.version > version) {
-                plaintextInstance.errors.rejectValue("version", "default.optimistic.locking.failure",
-                          [message(code: 'plaintext.label', default: 'Plaintext')] as Object[],
-                          "Another user has updated this Plaintext while you were editing")
-                render(view: "edit", model: [plaintextInstance: plaintextInstance])
-                return
-            }
         }
 
         plaintextInstance.properties = params

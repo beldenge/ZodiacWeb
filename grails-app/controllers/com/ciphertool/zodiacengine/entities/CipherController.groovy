@@ -52,22 +52,12 @@ class CipherController {
         [cipherInstance: cipherInstance]
     }
 
-    def update(Long id, Long version) {
+    def update(Long id) {
         def cipherInstance = Cipher.get(id)
         if (!cipherInstance) {
             flash.message = message(code: 'default.not.found.message', args: [message(code: 'cipher.label', default: 'Cipher'), id])
             redirect(action: "list")
             return
-        }
-
-        if (version != null) {
-            if (cipherInstance.version > version) {
-                cipherInstance.errors.rejectValue("version", "default.optimistic.locking.failure",
-                          [message(code: 'cipher.label', default: 'Cipher')] as Object[],
-                          "Another user has updated this Cipher while you were editing")
-                render(view: "edit", model: [cipherInstance: cipherInstance])
-                return
-            }
         }
 
         cipherInstance.properties = params

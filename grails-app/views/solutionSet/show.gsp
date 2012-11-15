@@ -29,17 +29,53 @@
 						<span class="property-value" aria-labelledby="name-label"><g:fieldValue bean="${solutionSetInstance}" field="name"/></span>
 					
 				</li>
-			
-				<li class="fieldcontain">
-					<span id="solutions-label" class="property-label"><g:message code="solutionSet.solutions.label" default="Solutions" /></span>
-					
-						<g:each in="${solutionSetInstance.solutions}" var="s">
-						<span class="property-value" aria-labelledby="solutions-label"><g:link controller="solution" action="show" params="[solutionId: s?.id.solutionId, solutionSetId: s?.id.solutionSet.id]">${s?.id.solutionId.encodeAsHTML()}</g:link></span>
-						</g:each>
-					
-				</li>
-			
+
 			</ol>
+			
+			<div id="list-solution" class="content scaffold-list" role="main">
+				<h1><g:message code="default.list.label" args="['Solution']" /></h1>
+				<g:if test="${flash.message}">
+				<div class="message" role="status">${flash.message}</div>
+				</g:if>
+				<table>
+					<thead>
+						<tr>
+						
+							<g:sortableColumn property="id.solutionId" title="${message(code: 'solution.id.label', default: 'Solution Id')}" />
+						
+							<th><g:message code="solution.cipher.label" default="Cipher" /></th>
+						
+							<g:sortableColumn property="totalMatches" title="${message(code: 'solution.totalMatches.label', default: 'Total Matches')}" />
+						
+							<g:sortableColumn property="uniqueMatches" title="${message(code: 'solution.uniqueMatches.label', default: 'Unique Matches')}" />
+						
+							<g:sortableColumn property="adjacentMatchCount" title="${message(code: 'solution.adjacentMatchCount.label', default: 'Adjacent Match Count')}" />
+						
+						</tr>
+					</thead>
+					<tbody>
+					<g:each in="${solutionInstanceList}" status="i" var="solutionInstance">
+						<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
+						
+							<td><g:link controller="solution" action="show" params="[solutionId: solutionInstance?.id.solutionId, solutionSetId: solutionInstance?.id.solutionSet.id]">${fieldValue(bean: solutionInstance, field: "id.solutionId")}</g:link></td>
+						
+							<td><g:link controller="cipher" action="show" id="${solutionInstance.cipher.id}">${fieldValue(bean: solutionInstance, field: "cipher.name")}</g:link></td>
+						
+							<td>${fieldValue(bean: solutionInstance, field: "totalMatches")}</td>
+						
+							<td>${fieldValue(bean: solutionInstance, field: "uniqueMatches")}</td>
+						
+							<td>${fieldValue(bean: solutionInstance, field: "adjacentMatchCount")}</td>
+						
+						</tr>
+					</g:each>
+					</tbody>
+				</table>
+				<div class="pagination">
+					<g:paginate total="${solutionInstanceTotal}" id="${solutionSetInstance.id}"/>
+				</div>
+			</div>
+			
 			<g:form>
 				<fieldset class="buttons">
 					<g:hiddenField name="id" value="${solutionSetInstance?.id}" />

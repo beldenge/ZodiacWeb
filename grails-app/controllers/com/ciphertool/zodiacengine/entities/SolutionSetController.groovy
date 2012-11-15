@@ -20,7 +20,7 @@ class SolutionSetController {
     }
 
     def save() {
-        def solutionSetInstance = new SolutionSet(params)
+        def solutionSetInstance = new SolutionSet(params.name)
         if (!solutionSetInstance.save(flush: true, insert:true)) {
             render(view: "create", model: [solutionSetInstance: solutionSetInstance])
             return
@@ -30,7 +30,7 @@ class SolutionSetController {
         redirect(action: "show", id: solutionSetInstance.id)
     }
 
-    def show(Long id) {
+    def show(Integer id) {
         def solutionSetInstance = SolutionSet.findById(id, [fetch: [solutions: "eager"]])
         if (!solutionSetInstance) {
             flash.message = message(code: 'default.not.found.message', args: [message(code: 'solutionSet.label', default: 'SolutionSet'), id])
@@ -38,7 +38,11 @@ class SolutionSetController {
             return
         }
 
-        [solutionSetInstance: solutionSetInstance]
+		def maxResults = Math.min(params.max as Integer ?: 10, 100)
+		def offset = params.offset as Integer ?: 0
+		def solutions = Solution.findAll("from Solution as s where s.id.solutionSet.id = :solutionSetId order by s.id asc", [solutionSetId: id, offset: offset, max: maxResults])
+
+        [solutionSetInstance: solutionSetInstance, solutionInstanceList: solutions, solutionInstanceTotal:solutionSetInstance.solutions.size()]
     }
 
     def edit(Long id) {
@@ -52,22 +56,12 @@ class SolutionSetController {
         [solutionSetInstance: solutionSetInstance]
     }
 
-    def update(Long id, Long version) {
+    def update(Long id) {
         def solutionSetInstance = SolutionSet.get(id)
         if (!solutionSetInstance) {
             flash.message = message(code: 'default.not.found.message', args: [message(code: 'solutionSet.label', default: 'SolutionSet'), id])
             redirect(action: "list")
             return
-        }
-
-        if (version != null) {
-            if (solutionSetInstance.version > version) {
-                solutionSetInstance.errors.rejectValue("version", "default.optimistic.locking.failure",
-                          [message(code: 'solutionSet.label', default: 'SolutionSet')] as Object[],
-                          "Another user has updated this SolutionSet while you were editing")
-                render(view: "edit", model: [solutionSetInstance: solutionSetInstance])
-                return
-            }
         }
 
         solutionSetInstance.properties = params

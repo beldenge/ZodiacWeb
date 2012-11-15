@@ -10,9 +10,9 @@ class SolutionController {
         redirect(action: "list", params: params)
     }
 
-    def list(Integer max) {
-        def maxResults = Math.min(max ?: 10, 100)
-        [solutionInstanceList: Solution.list(max:maxResults, fetch:[plaintextCharacters: "lazy"]), solutionInstanceTotal: Solution.count()]
+    def list() {
+        def maxResults = Math.min(params.max as Integer ?: 10, 100)
+        [solutionInstanceList: Solution.list(offset: params.offset, max:maxResults, fetch:[plaintextCharacters: "lazy"], sort: "id"), solutionInstanceTotal: Solution.count()]
     }
 
     def create() {
@@ -30,7 +30,7 @@ class SolutionController {
         redirect(action: "show", id: solutionInstance.id)
     }
 
-    def show(params) {
+    def show() {
         def solutionInstance = Solution.findById(new SolutionId(new SolutionSet(params.solutionSetId as Integer), params.solutionId as int))
         if (!solutionInstance) {
             flash.message = message(code: 'default.not.found.message', args: [message(code: 'solution.label', default: 'Solution'), id])
@@ -52,22 +52,12 @@ class SolutionController {
         [solutionInstance: solutionInstance]
     }
 
-    def update(Long id, Long version) {
+    def update(Long id) {
         def solutionInstance = Solution.get(id)
         if (!solutionInstance) {
             flash.message = message(code: 'default.not.found.message', args: [message(code: 'solution.label', default: 'Solution'), id])
             redirect(action: "list")
             return
-        }
-
-        if (version != null) {
-            if (solutionInstance.version > version) {
-                solutionInstance.errors.rejectValue("version", "default.optimistic.locking.failure",
-                          [message(code: 'solution.label', default: 'Solution')] as Object[],
-                          "Another user has updated this Solution while you were editing")
-                render(view: "edit", model: [solutionInstance: solutionInstance])
-                return
-            }
         }
 
         solutionInstance.properties = params

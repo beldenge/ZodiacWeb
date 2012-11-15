@@ -24,7 +24,9 @@
 				<thead>
 					<tr>
 					
-						<g:sortableColumn property="id.solutionId" title="${message(code: 'solution.id.label', default: 'Solution Id')}" />
+						<g:sortableColumn property="id.solutionSetId" title="${message(code: 'solution.id.solutionSet.id.label', default: 'Solution Set Id')}" />
+					
+						<g:sortableColumn property="id.solutionId" title="${message(code: 'solution.id.solutionId.label', default: 'Solution Id')}" />
 					
 						<th><g:message code="solution.cipher.label" default="Cipher" /></th>
 					
@@ -40,7 +42,9 @@
 				<g:each in="${solutionInstanceList}" status="i" var="solutionInstance">
 					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
 					
-						<td><g:link action="show" id="${solutionInstance.id}">${fieldValue(bean: solutionInstance, field: "id.solutionId")}</g:link></td>
+						<td><g:link controller="SolutionSet" action="show" id="${solutionInstance.id.solutionSet.id}">${fieldValue(bean: solutionInstance, field: "id.solutionSet.id")}</g:link></td>
+					
+						<td><g:link action="show" params="[solutionId: solutionInstance?.id.solutionId, solutionSetId: solutionInstance?.id.solutionSet.id]">${fieldValue(bean: solutionInstance, field: "id.solutionId")}</g:link></td>
 					
 						<td><g:link controller="cipher" action="show" id="${solutionInstance.cipher.id}">${fieldValue(bean: solutionInstance, field: "cipher.name")}</g:link></td>
 					
