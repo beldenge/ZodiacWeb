@@ -1,12 +1,13 @@
 dataSource {
     pooled = true
     driverClassName = "org.postgresql.Driver"
+	dialect = "org.hibernate.dialect.PostgreSQLDialect"
     username = "postgres"
     password = "postgres"
-	logSql = true
+	logSql = false
 }
 hibernate {
-    cache.use_second_level_cache = true
+    cache.use_second_level_cache = false
     cache.use_query_cache = false
     cache.region.factory_class = 'net.sf.ehcache.hibernate.EhCacheRegionFactory'
 }
