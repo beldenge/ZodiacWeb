@@ -49,7 +49,7 @@
 					
 					<table>
 					<tr>
-					<g:each in="${ (0..<cipherInstance.ciphertextCharacters.size()) }">
+					<g:each in="${ (1..cipherInstance.ciphertextCharacters.size()) }">
 						<g:set var="c" value="${cipherInstance.ciphertextCharacters.getAt(it - 1)}" />
 						<td>
 						<span class="property-value" aria-labelledby="ciphertextCharacters-label">

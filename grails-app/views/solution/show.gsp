@@ -24,9 +24,16 @@
 			<ol class="property-list solution">
 			
 				<li class="fieldcontain">
-					<span id="id-label" class="property-label"><g:message code="solution.id.label" default="Solution Id" /></span>
+					<span id="solutionId-label" class="property-label"><g:message code="solution.id.solutionId.label" default="Solution Id" /></span>
 					
-						<span class="property-value" aria-labelledby="id-label"><g:fieldValue bean="${solutionInstance}" field="id"/></span>
+						<span class="property-value" aria-labelledby="solutionId-label"><g:fieldValue bean="${solutionInstance}" field="id.solutionId"/></span>
+					
+				</li>
+				
+				<li class="fieldcontain">
+					<span id="solutionSetId-label" class="property-label"><g:message code="solution.id.solutionSet.id.label" default="Solution Set Id" /></span>
+					
+						<span class="property-value" aria-labelledby="solutionSetId-label"><g:fieldValue bean="${solutionInstance}" field="id.solutionSet.id"/></span>
 					
 				</li>
 			
@@ -63,24 +70,26 @@
 					
 					<table>
 					<tr>
-					<g:each in="${ (1..solutionInstance.plaintextCharacters.size()) }">
-						<g:set var="p" value="${solutionInstance.plaintextCharacters.getAt(it - 1)}" />
-						<td>
-						<span class="property-value" aria-labelledby="plaintextCharacters-label">
-							<g:link controller="plaintext" action="show" params="[solutionSetId: p?.id.solution.id.solutionSet.id, solutionId: p?.id.solution.id.solutionId, ciphertextId: p?.id.ciphertextId]">
-								<g:if test="${p.hasMatch}">
-									[${p.value.encodeAsHTML()}]
-								</g:if>
-								<g:else>
-									${p.value.encodeAsHTML()}
-								</g:else>
-							</g:link>
-						</span>
-						</td>
-						<g:if test="${(it % solutionInstance.cipher.columns) == 0}">
-							</tr><tr>
-						</g:if>
-					</g:each>
+					<g:if test="${solutionInstance.plaintextCharacters != null && solutionInstance.plaintextCharacters.size() > 0}">
+						<g:each in="${ (1..solutionInstance.plaintextCharacters.size()) }">
+							<g:set var="p" value="${solutionInstance.plaintextCharacters.getAt(it - 1)}" />
+							<td>
+							<span class="property-value" aria-labelledby="plaintextCharacters-label">
+								<g:link controller="plaintext" action="show" params="[solutionSetId: p?.id.solution.id.solutionSet.id, solutionId: p?.id.solution.id.solutionId, ciphertextId: p?.id.ciphertextId]">
+									<g:if test="${p.hasMatch}">
+										[${p.value.encodeAsHTML()}]
+									</g:if>
+									<g:else>
+										${p.value.encodeAsHTML()}
+									</g:else>
+								</g:link>
+							</span>
+							</td>
+							<g:if test="${(it % solutionInstance.cipher.columns) == 0}">
+								</tr><tr>
+							</g:if>
+						</g:each>
+					</g:if>
 					</tr>
 					</table>
 				</li>
@@ -88,8 +97,9 @@
 			</ol>
 			<g:form>
 				<fieldset class="buttons">
-					<g:hiddenField name="id" value="${solutionInstance?.id}" />
-					<g:link class="edit" action="edit" id="${solutionInstance?.id}"><g:message code="default.button.edit.label" default="Edit" /></g:link>
+					<g:hiddenField name="solutionId" value="${solutionInstance?.id.solutionId}" />
+					<g:hiddenField name="solutionSetId" value="${solutionInstance?.id.solutionSet.id}" />
+					<g:link class="edit" action="edit" params="[solutionId:solutionInstance?.id.solutionId, solutionSetId:solutionInstance?.id.solutionSet.id]"><g:message code="default.button.edit.label" default="Edit" /></g:link>
 					<g:actionSubmit class="delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
 				</fieldset>
 			</g:form>

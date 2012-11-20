@@ -20,20 +20,23 @@ class SolutionController {
     }
 
     def save() {
-        def solutionInstance = new Solution(params)
+		def solutionSet = new SolutionSet(params.solutionSetId as Integer)
+		def cipher = new Cipher(params.cipherId as Integer)
+        def solutionInstance = new Solution(solutionSet, params.solutionId as int, cipher)
         if (!solutionInstance.save(flush: true, insert:true)) {
             render(view: "create", model: [solutionInstance: solutionInstance])
             return
         }
 
         flash.message = message(code: 'default.created.message', args: [message(code: 'solution.label', default: 'Solution'), solutionInstance.id])
-        redirect(action: "show", id: solutionInstance.id)
+        redirect(action: "show", params: [solutionId:solutionInstance.id.solutionId, solutionSetId:solutionInstance.id.solutionSet.id])
     }
 
     def show() {
-        def solutionInstance = Solution.findById(new SolutionId(new SolutionSet(params.solutionSetId as Integer), params.solutionId as int))
+		def solutionId = new SolutionId(new SolutionSet(params.solutionSetId as Integer), params.solutionId as int)
+        def solutionInstance = Solution.findById(solutionId)
         if (!solutionInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'solution.label', default: 'Solution'), id])
+            flash.message = message(code: 'default.not.found.message', args: [message(code: 'solution.label', default: 'Solution'), solutionId])
             redirect(action: "list")
             return
         }
@@ -41,10 +44,11 @@ class SolutionController {
         [solutionInstance: solutionInstance]
     }
 
-    def edit(Long id) {
-        def solutionInstance = Solution.get(id)
+    def edit() {
+		def solutionId = new SolutionId(new SolutionSet(params.solutionSetId as Integer), params.solutionId as int)
+        def solutionInstance = Solution.findById(solutionId)
         if (!solutionInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'solution.label', default: 'Solution'), id])
+            flash.message = message(code: 'default.not.found.message', args: [message(code: 'solution.label', default: 'Solution'), solutionId])
             redirect(action: "list")
             return
         }
@@ -52,10 +56,11 @@ class SolutionController {
         [solutionInstance: solutionInstance]
     }
 
-    def update(Long id) {
-        def solutionInstance = Solution.get(id)
+    def update() {
+		def solutionId = new SolutionId(new SolutionSet(params.solutionSetId as Integer), params.solutionId as int)
+        def solutionInstance = Solution.findById(solutionId)
         if (!solutionInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'solution.label', default: 'Solution'), id])
+            flash.message = message(code: 'default.not.found.message', args: [message(code: 'solution.label', default: 'Solution'), solutionId])
             redirect(action: "list")
             return
         }
@@ -67,26 +72,27 @@ class SolutionController {
             return
         }
 
-        flash.message = message(code: 'default.updated.message', args: [message(code: 'solution.label', default: 'Solution'), solutionInstance.id])
-        redirect(action: "show", id: solutionInstance.id)
+        flash.message = message(code: 'default.updated.message', args: [message(code: 'solution.label', default: 'Solution'), solutionId])
+        redirect(action: "show", params: [solutionId:solutionId.solutionId, solutionSetId:solutionId.solutionSet.id])
     }
 
-    def delete(Long id) {
-        def solutionInstance = Solution.get(id)
+    def delete() {
+		def solutionId = new SolutionId(new SolutionSet(params.solutionSetId as Integer), params.solutionId as int)
+        def solutionInstance = Solution.findById(solutionId)
         if (!solutionInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'solution.label', default: 'Solution'), id])
+            flash.message = message(code: 'default.not.found.message', args: [message(code: 'solution.label', default: 'Solution'), solutionId])
             redirect(action: "list")
             return
         }
 
         try {
             solutionInstance.delete(flush: true)
-            flash.message = message(code: 'default.deleted.message', args: [message(code: 'solution.label', default: 'Solution'), id])
+            flash.message = message(code: 'default.deleted.message', args: [message(code: 'solution.label', default: 'Solution'), solutionId])
             redirect(action: "list")
         }
         catch (DataIntegrityViolationException e) {
-            flash.message = message(code: 'default.not.deleted.message', args: [message(code: 'solution.label', default: 'Solution'), id])
-            redirect(action: "show", id: id)
+            flash.message = message(code: 'default.not.deleted.message', args: [message(code: 'solution.label', default: 'Solution'), solutionId])
+            redirect(action: "show", params: [solutionId:solutionId.solutionId, solutionSetId:solutionId.solutionSet.id])
         }
     }
 }
