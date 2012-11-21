@@ -10,9 +10,9 @@ class PlaintextController {
         redirect(action: "list", params: params)
     }
 
-    def list(Integer max) {
-        params.max = Math.min(max ?: 10, 100)
-        [plaintextInstanceList: Plaintext.list(params), plaintextInstanceTotal: Plaintext.count()]
+    def list() {
+		def maxResults = Math.min(params.max as Integer ?: 10, 100)
+        [plaintextInstanceList: Plaintext.list(offset: params.offset, max:maxResults), plaintextInstanceTotal: Plaintext.count()]
     }
 
     def create() {
@@ -20,21 +20,22 @@ class PlaintextController {
     }
 
     def save() {
-        def plaintextInstance = new Plaintext(params)
+		def plaintextId = new PlaintextId(new Solution(new SolutionSet(params.solutionSetId as Integer), params.solutionId as int), params.ciphertextId as int)
+        def plaintextInstance = new Plaintext(plaintextId, params.value)
         if (!plaintextInstance.save(flush: true, insert:true)) {
             render(view: "create", model: [plaintextInstance: plaintextInstance])
             return
         }
 
-        flash.message = message(code: 'default.created.message', args: [message(code: 'plaintext.label', default: 'Plaintext'), plaintextInstance.id])
-        redirect(action: "show", id: plaintextInstance.id)
+        flash.message = message(code: 'default.created.message', args: [message(code: 'plaintext.label', default: 'Plaintext'), plaintextId])
+        redirect(action: "show", params: [solutionSetId:plaintextId.solution.id.solutionSet.id, solutionId:plaintextId.solution.id.solutionId, ciphertextId:plaintextId.ciphertextId])
     }
 
     def show(params) {
-		def solution = new Solution(new SolutionSet(params.solutionSetId as Integer), params.solutionId as int)
-		def plaintextInstance = Plaintext.findById(new PlaintextId(solution, params.ciphertextId as int))
+		def plaintextId = new PlaintextId(new Solution(new SolutionSet(params.solutionSetId as Integer), params.solutionId as int), params.ciphertextId as int)
+        def plaintextInstance = Plaintext.findById(plaintextId)
         if (!plaintextInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'plaintext.label', default: 'Plaintext'), id])
+            flash.message = message(code: 'default.not.found.message', args: [message(code: 'plaintext.label', default: 'Plaintext'), plaintextId])
             redirect(action: "list")
             return
         }
@@ -42,10 +43,11 @@ class PlaintextController {
         [plaintextInstance: plaintextInstance]
     }
 
-    def edit(Long id) {
-        def plaintextInstance = Plaintext.get(id)
+    def edit() {
+		def plaintextId = new PlaintextId(new Solution(new SolutionSet(params.solutionSetId as Integer), params.solutionId as int), params.ciphertextId as int)
+        def plaintextInstance = Plaintext.findById(plaintextId)
         if (!plaintextInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'plaintext.label', default: 'Plaintext'), id])
+            flash.message = message(code: 'default.not.found.message', args: [message(code: 'plaintext.label', default: 'Plaintext'), plaintextId])
             redirect(action: "list")
             return
         }
@@ -53,10 +55,11 @@ class PlaintextController {
         [plaintextInstance: plaintextInstance]
     }
 
-    def update(Long id) {
-        def plaintextInstance = Plaintext.get(id)
+    def update() {
+		def plaintextId = new PlaintextId(new Solution(new SolutionSet(params.solutionSetId as Integer), params.solutionId as int), params.ciphertextId as int)
+        def plaintextInstance = Plaintext.findById(plaintextId)
         if (!plaintextInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'plaintext.label', default: 'Plaintext'), id])
+            flash.message = message(code: 'default.not.found.message', args: [message(code: 'plaintext.label', default: 'Plaintext'), plaintextId])
             redirect(action: "list")
             return
         }
@@ -68,26 +71,29 @@ class PlaintextController {
             return
         }
 
-        flash.message = message(code: 'default.updated.message', args: [message(code: 'plaintext.label', default: 'Plaintext'), plaintextInstance.id])
-        redirect(action: "show", id: plaintextInstance.id)
+        flash.message = message(code: 'default.updated.message', args: [message(code: 'plaintext.label', default: 'Plaintext'), plaintextId])
+        redirect(action: "show", params: [solutionSetId:plaintextId.solution.id.solutionSet.id, solutionId:plaintextId.solution.id.solutionId, ciphertextId:plaintextId.ciphertextId])
     }
 
-    def delete(Long id) {
-        def plaintextInstance = Plaintext.get(id)
+    def delete() {
+		def plaintextId = new PlaintextId(new Solution(new SolutionSet(params.solutionSetId as Integer), params.solutionId as int), params.ciphertextId as int)
+        def plaintextInstance = Plaintext.findById(plaintextId)
         if (!plaintextInstance) {
-            flash.message = message(code: 'default.not.found.message', args: [message(code: 'plaintext.label', default: 'Plaintext'), id])
+            flash.message = message(code: 'default.not.found.message', args: [message(code: 'plaintext.label', default: 'Plaintext'), plaintextId])
             redirect(action: "list")
             return
         }
 
         try {
+			def solution = plaintextInstance.id.solution
+			solution.getPlaintextCharacters().remove(plaintextInstance)
             plaintextInstance.delete(flush: true)
-            flash.message = message(code: 'default.deleted.message', args: [message(code: 'plaintext.label', default: 'Plaintext'), id])
+            flash.message = message(code: 'default.deleted.message', args: [message(code: 'plaintext.label', default: 'Plaintext'), plaintextId])
             redirect(action: "list")
         }
         catch (DataIntegrityViolationException e) {
-            flash.message = message(code: 'default.not.deleted.message', args: [message(code: 'plaintext.label', default: 'Plaintext'), id])
-            redirect(action: "show", id: id)
+            flash.message = message(code: 'default.not.deleted.message', args: [message(code: 'plaintext.label', default: 'Plaintext'), plaintextId])
+            redirect(action: "show", params: [solutionSetId:plaintextId.solution.id.solutionSet.id, solutionId:plaintextId.solution.id.solutionId, ciphertextId:plaintextId.ciphertextId])
         }
     }
 }

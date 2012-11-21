@@ -47,15 +47,17 @@
 				<li class="fieldcontain">
 					<span id="ciphertextId-label" class="property-label"><g:message code="plaintext.id.ciphertextId.label" default="Ciphertext" /></span>
 					
-					<span class="property-value" aria-labelledby="ciphertextId-label"><g:link controller="ciphertext" action="show" params="[cipherId: plaintextInstance?.id.solution.cipher.id, ciphertextId: plaintextInstance?.id.ciphertextId]"><g:img dir="images/cipher" file="${plaintextInstance?.id.solution.cipher.ciphertextCharacters.getAt(plaintextInstance?.id.ciphertextId).value.encodeAsHTML()}.gif" /></g:link></span>
+					<span class="property-value" aria-labelledby="ciphertextId-label"><g:link controller="ciphertext" action="show" params="[cipherId: plaintextInstance?.id.solution.cipher.id, ciphertextId: plaintextInstance?.id.ciphertextId]"><g:img dir="images/cipher" file="${plaintextInstance?.id.solution.cipher.ciphertextCharacters.getAt(plaintextInstance?.id.ciphertextId)?.value?.encodeAsHTML()}.gif" /></g:link></span>
 					
 				</li>
 				
 			</ol>
 			<g:form>
 				<fieldset class="buttons">
-					<g:hiddenField name="id" value="${plaintextInstance?.id}" />
-					<g:link class="edit" action="edit" id="${plaintextInstance?.id}"><g:message code="default.button.edit.label" default="Edit" /></g:link>
+					<g:hiddenField name="solutionSetId" value="${plaintextInstance?.id.solution.id.solutionSet.id}" />
+					<g:hiddenField name="solutionId" value="${plaintextInstance?.id.solution.id.solutionId}" />
+					<g:hiddenField name="ciphertextId" value="${plaintextInstance?.id.ciphertextId}" />
+					<g:link class="edit" action="edit" params="[solutionSetId:plaintextInstance?.id.solution.id.solutionSet.id, solutionId:plaintextInstance?.id.solution.id.solutionId, ciphertextId:plaintextInstance?.id.ciphertextId]"><g:message code="default.button.edit.label" default="Edit" /></g:link>
 					<g:actionSubmit class="delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
 				</fieldset>
 			</g:form>

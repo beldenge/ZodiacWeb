@@ -28,10 +28,11 @@
 			</ul>
 			</g:hasErrors>
 			<g:form method="post" >
-				<g:hiddenField name="id" value="${plaintextInstance?.id}" />
-				<g:hiddenField name="version" value="${plaintextInstance?.version}" />
+				<g:hiddenField name="solutionSetId" value="${plaintextInstance?.id.solution.id.solutionSet.id}" />
+				<g:hiddenField name="solutionId" value="${plaintextInstance?.id.solution.id.solutionId}" />
+				<g:hiddenField name="ciphertextId" value="${plaintextInstance?.id.ciphertextId}" />
 				<fieldset class="form">
-					<g:render template="form"/>
+					<g:render template="edit"/>
 				</fieldset>
 				<fieldset class="buttons">
 					<g:actionSubmit class="save" action="update" value="${message(code: 'default.button.update.label', default: 'Update')}" />
