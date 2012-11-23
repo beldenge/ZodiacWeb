@@ -1,6 +1,7 @@
 package com.ciphertool.zodiacengine.entities
 
 import org.springframework.dao.DataIntegrityViolationException
+import org.hibernate.FetchMode
 
 class PlaintextController {
 
@@ -11,8 +12,17 @@ class PlaintextController {
     }
 
     def list() {
-		def maxResults = Math.min(params.max as Integer ?: 10, 100)
-        [plaintextInstanceList: Plaintext.list(offset: params.offset, max:maxResults), plaintextInstanceTotal: Plaintext.count()]
+		def maxToDisplay = Math.min(params.max as Integer ?: 10, 100)
+		def offset = params.offset as Integer ?: 0
+		def sortBy = params.sort as String ?: "id"
+		def direction = params.order as String ?: "asc"
+		def plaintextCriteria = Plaintext.createCriteria()
+		def plaintextCharacters = plaintextCriteria.list {
+			maxResults(maxToDisplay)
+			firstResult(offset)
+			order(sortBy, direction)
+		}
+        [plaintextInstanceList: plaintextCharacters, plaintextInstanceTotal: Plaintext.count()]
     }
 
     def create() {

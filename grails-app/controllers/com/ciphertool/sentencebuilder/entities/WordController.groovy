@@ -1,6 +1,7 @@
 package com.ciphertool.sentencebuilder.entities
 
 import org.springframework.dao.DataIntegrityViolationException
+import org.hibernate.FetchMode
 
 class WordController {
 
@@ -11,8 +12,17 @@ class WordController {
     }
 
     def list(Integer max) {
-        params.max = Math.min(max ?: 10, 100)
-        [wordInstanceList: Word.list(params), wordInstanceTotal: Word.count()]
+		def maxToDisplay = Math.min(params.max as Integer ?: 10, 100)
+		def offset = params.offset as Integer ?: 0
+		def sortBy = params.sort as String ?: "id"
+		def direction = params.order as String ?: "asc"
+		def wordCriteria = Word.createCriteria()
+		def words = wordCriteria.list {
+			maxResults(maxToDisplay)
+			firstResult(offset)
+			order(sortBy, direction)
+		}
+        [wordInstanceList: words, wordInstanceTotal: Word.count()]
     }
 
     def create() {

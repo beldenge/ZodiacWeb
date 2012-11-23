@@ -24,17 +24,19 @@
 				<thead>
 					<tr>
 					
-						<g:sortableColumn property="id.solutionSetId" title="${message(code: 'solution.id.solutionSet.id.label', default: 'Solution Set Id')}" />
+						<g:sortableColumn property="id.solutionSet.id" title="${message(code: 'solution.id.solutionSet.id.label', default: 'Population Id')}" />
 					
-						<g:sortableColumn property="id.solutionId" title="${message(code: 'solution.id.solutionId.label', default: 'Solution Id')}" />
+						<g:sortableColumn property="id.solutionId" title="${message(code: 'solution.id.solutionId.label', default: 'Solution Id')}" />					
 					
-						<th><g:message code="solution.cipher.label" default="Cipher" /></th>
+						<g:sortableColumn property="cipher" title="${message(code: 'solution.cipher.label', default: 'Cipher')}" />
 					
 						<g:sortableColumn property="totalMatches" title="${message(code: 'solution.totalMatches.label', default: 'Total Matches')}" />
 					
 						<g:sortableColumn property="uniqueMatches" title="${message(code: 'solution.uniqueMatches.label', default: 'Unique Matches')}" />
 					
-						<g:sortableColumn property="adjacentMatchCount" title="${message(code: 'solution.adjacentMatchCount.label', default: 'Adjacent Match Count')}" />
+						<g:sortableColumn property="adjacentMatchCount" title="${message(code: 'solution.adjacentMatchCount.label', default: 'Adjacent Matches')}" />
+						
+						<g:sortableColumn property="createdDate" title="${message(code: 'solution.createdDate.label', default: 'Created')}" />
 					
 					</tr>
 				</thead>
@@ -53,6 +55,8 @@
 						<td>${fieldValue(bean: solutionInstance, field: "uniqueMatches")}</td>
 					
 						<td>${fieldValue(bean: solutionInstance, field: "adjacentMatchCount")}</td>
+						
+						<td><g:formatDate date="${solutionInstance?.createdDate}" type="datetime" style="MEDIUM"/></td>
 					
 					</tr>
 				</g:each>

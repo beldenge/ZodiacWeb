@@ -1,6 +1,7 @@
 package com.ciphertool.zodiacengine.entities
 
 import org.springframework.dao.DataIntegrityViolationException
+import org.hibernate.FetchMode
 
 class SolutionController {
 
@@ -11,8 +12,18 @@ class SolutionController {
     }
 
     def list() {
-        def maxResults = Math.min(params.max as Integer ?: 10, 100)
-        [solutionInstanceList: Solution.list(offset: params.offset, max:maxResults, fetch:[plaintextCharacters: "lazy"], sort: "id"), solutionInstanceTotal: Solution.count()]
+		def maxToDisplay = Math.min(params.max as Integer ?: 10, 100)
+		def offset = params.offset as Integer ?: 0
+		def sortBy = params.sort as String ?: "id"
+		def direction = params.order as String ?: "asc"
+		def solutionCriteria = Solution.createCriteria()
+		def solutions = solutionCriteria.list {
+			maxResults(maxToDisplay)
+			firstResult(offset)
+			order(sortBy, direction)
+			fetchMode("plaintextCharacters", FetchMode.SELECT)
+		}
+        [solutionInstanceList: solutions, solutionInstanceTotal: Solution.count()]
     }
 
     def create() {
@@ -35,6 +46,7 @@ class SolutionController {
     def show() {
 		def solutionId = new SolutionId(new SolutionSet(params.solutionSetId as Integer), params.solutionId as int)
         def solutionInstance = Solution.findById(solutionId)
+
         if (!solutionInstance) {
             flash.message = message(code: 'default.not.found.message', args: [message(code: 'solution.label', default: 'Solution'), solutionId])
             redirect(action: "list")

@@ -27,7 +27,7 @@
 				<li class="fieldcontain">
 					<span id="cipher-label" class="property-label"><g:message code="ciphertext.id.cipher.name.label" default="Cipher" /></span>
 					
-						<span class="property-value" aria-labelledby="cipher-label"><g:fieldValue bean="${ciphertextInstance}" field="id.cipher.name"/></span>
+						<span class="property-value" aria-labelledby="cipher-label"><g:link controller="cipher" action="show" id="${ciphertextInstance?.id.cipher.id}"><g:fieldValue bean="${ciphertextInstance}" field="id.cipher.name"/></g:link></span>
 					
 				</li>
 				

@@ -24,7 +24,11 @@
 				<thead>
 					<tr>
 					
+						<g:sortableColumn property="id" title="${message(code: 'solutionSet.id.label', default: 'Population Id')}" />
+					
 						<g:sortableColumn property="name" title="${message(code: 'solutionSet.name.label', default: 'Name')}" />
+						
+						<g:sortableColumn property="createdDate" title="${message(code: 'solutionSet.createdDate.label', default: 'Created Date')}" />
 					
 					</tr>
 				</thead>
@@ -32,7 +36,11 @@
 				<g:each in="${solutionSetInstanceList}" status="i" var="solutionSetInstance">
 					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
 					
-						<td><g:link action="show" id="${solutionSetInstance.id}">${fieldValue(bean: solutionSetInstance, field: "name")}</g:link></td>
+						<td><g:link action="show" id="${solutionSetInstance.id}">${fieldValue(bean: solutionSetInstance, field: "id")}</g:link></td>
+					
+						<td>${fieldValue(bean: solutionSetInstance, field: "name")}</td>
+						
+						<td><g:formatDate date="${solutionSetInstance?.createdDate}" type="datetime" style="MEDIUM"/></td>
 					
 					</tr>
 				</g:each>

@@ -1,6 +1,7 @@
 package com.ciphertool.zodiacengine.entities
 
 import org.springframework.dao.DataIntegrityViolationException
+import org.hibernate.FetchMode
 
 class CipherController {
 
@@ -12,7 +13,8 @@ class CipherController {
 
     def list(Integer max) {
         def maxResults = Math.min(max ?: 10, 100)
-        [cipherInstanceList: Cipher.list(max:maxResults, fetch:[ciphertextCharacters: "lazy"]), cipherInstanceTotal: Cipher.count()]
+		def sortBy = params.sort as String ?: "id"
+        [cipherInstanceList: Cipher.list(max:maxResults, offset: params.offset, fetch:[ciphertextCharacters: "lazy"], sort: sortBy, order: params.order), cipherInstanceTotal: Cipher.count()]
     }
 
     def create() {

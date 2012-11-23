@@ -31,7 +31,7 @@
 				</li>
 				
 				<li class="fieldcontain">
-					<span id="solutionSetId-label" class="property-label"><g:message code="solution.id.solutionSet.id.label" default="Solution Set Id" /></span>
+					<span id="solutionSetId-label" class="property-label"><g:message code="solution.id.solutionSet.id.label" default="Population Id" /></span>
 					
 						<span class="property-value" aria-labelledby="solutionSetId-label"><g:fieldValue bean="${solutionInstance}" field="id.solutionSet.id"/></span>
 					
@@ -52,7 +52,7 @@
 				</li>
 			
 				<li class="fieldcontain">
-					<span id="adjacentMatchCount-label" class="property-label"><g:message code="solution.adjacentMatchCount.label" default="Adjacent Match Count" /></span>
+					<span id="adjacentMatchCount-label" class="property-label"><g:message code="solution.adjacentMatchCount.label" default="Adjacent Matches" /></span>
 					
 						<span class="property-value" aria-labelledby="adjacentMatchCount-label"><g:fieldValue bean="${solutionInstance}" field="adjacentMatchCount"/></span>
 					
@@ -62,6 +62,13 @@
 					<span id="cipher-label" class="property-label"><g:message code="solution.cipher.label" default="Cipher" /></span>
 					
 						<span class="property-value" aria-labelledby="cipher-label"><g:link controller="cipher" action="show" id="${solutionInstance?.cipher?.id}">${solutionInstance?.cipher?.name.encodeAsHTML()}</g:link></span>
+					
+				</li>
+				
+				<li class="fieldcontain">
+					<span id="createdDate-label" class="property-label"><g:message code="solution.createdDate.label" default="Created Date" /></span>
+					
+						<span class="property-value" aria-labelledby="createdDate-label"><g:formatDate date="${solutionInstance?.createdDate}" type="datetime" style="MEDIUM"/></span>
 					
 				</li>
 			

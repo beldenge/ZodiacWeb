@@ -22,11 +22,25 @@
 			<div class="message" role="status">${flash.message}</div>
 			</g:if>
 			<ol class="property-list solutionSet">
+
+				<li class="fieldcontain">
+					<span id="id-label" class="property-label"><g:message code="solutionSet.id.label" default="Population Id" /></span>
+					
+						<span class="property-value" aria-labelledby="id-label"><g:fieldValue bean="${solutionSetInstance}" field="id"/></span>
+					
+				</li>
 			
 				<li class="fieldcontain">
 					<span id="name-label" class="property-label"><g:message code="solutionSet.name.label" default="Name" /></span>
 					
 						<span class="property-value" aria-labelledby="name-label"><g:fieldValue bean="${solutionSetInstance}" field="name"/></span>
+					
+				</li>
+				
+				<li class="fieldcontain">
+					<span id="createdDate-label" class="property-label"><g:message code="solutionSet.createdDate.label" default="Created Date" /></span>
+					
+						<span class="property-value" aria-labelledby="createdDate-label"><g:formatDate date="${solutionSetInstance?.createdDate}" type="datetime" style="MEDIUM"/></span>
 					
 				</li>
 
@@ -41,15 +55,18 @@
 					<thead>
 						<tr>
 						
+							<!-- <th><g:message code="solution.id.label" default="Solution Id" /></th> -->
 							<g:sortableColumn property="id.solutionId" title="${message(code: 'solution.id.label', default: 'Solution Id')}" />
-						
-							<th><g:message code="solution.cipher.label" default="Cipher" /></th>
+							
+							<g:sortableColumn property="cipher" title="${message(code: 'solution.cipher.label', default: 'Cipher')}" />						
 						
 							<g:sortableColumn property="totalMatches" title="${message(code: 'solution.totalMatches.label', default: 'Total Matches')}" />
 						
 							<g:sortableColumn property="uniqueMatches" title="${message(code: 'solution.uniqueMatches.label', default: 'Unique Matches')}" />
 						
-							<g:sortableColumn property="adjacentMatchCount" title="${message(code: 'solution.adjacentMatchCount.label', default: 'Adjacent Match Count')}" />
+							<g:sortableColumn property="adjacentMatchCount" title="${message(code: 'solution.adjacentMatchCount.label', default: 'Adjacent Matches')}" />
+							
+							<g:sortableColumn property="createdDate" title="${message(code: 'solution.createdDate.label', default: 'Created Date')}" />
 						
 						</tr>
 					</thead>
@@ -66,6 +83,8 @@
 							<td>${fieldValue(bean: solutionInstance, field: "uniqueMatches")}</td>
 						
 							<td>${fieldValue(bean: solutionInstance, field: "adjacentMatchCount")}</td>
+							
+							<td><g:formatDate date="${solutionInstance?.createdDate}" type="datetime" style="MEDIUM"/></td>
 						
 						</tr>
 					</g:each>

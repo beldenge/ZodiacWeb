@@ -47,3 +47,11 @@
 	</label>
 	<g:fieldValue bean="${solutionInstance}" field="adjacentMatchCount"/>
 </div>
+
+<div class="fieldcontain ${hasErrors(bean: solutionInstance, field: 'createdDate', 'error')} ">
+	<label for="createdDate">
+		<g:message code="solution.createdDate.label" default="Created Date" />
+		
+	</label>
+	<g:formatDate date="${solutionInstance?.createdDate}" type="datetime" style="MEDIUM"/>
+</div>

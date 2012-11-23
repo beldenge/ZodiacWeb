@@ -1,6 +1,7 @@
 package com.ciphertool.zodiacengine.entities
 
 import org.springframework.dao.DataIntegrityViolationException
+import org.hibernate.FetchMode
 
 class SolutionSetController {
 
@@ -38,10 +39,19 @@ class SolutionSetController {
             return
         }
 
-		def maxResults = Math.min(params.max as Integer ?: 10, 100)
+		def maxToDisplay = Math.min(params.max as Integer ?: 10, 100)
 		def offset = params.offset as Integer ?: 0
-		def solutions = Solution.findAll("from Solution as s where s.id.solutionSet.id = :solutionSetId order by s.id asc", [solutionSetId: id, offset: offset, max: maxResults])
-
+		def sortBy = params.sort as String ?: "id"
+		def direction = params.order as String ?: "asc"
+		def solutionCriteria = Solution.createCriteria()
+		def solutions = solutionCriteria.list {
+			eq("id.solutionSet.id", id)
+			maxResults(maxToDisplay)
+			firstResult(offset)
+			order(sortBy, direction)
+			fetchMode("plaintextCharacters", FetchMode.SELECT)
+		}
+		
         [solutionSetInstance: solutionSetInstance, solutionInstanceList: solutions, solutionInstanceTotal:solutionSetInstance.solutions.size()]
     }
 

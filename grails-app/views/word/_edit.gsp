@@ -1,7 +1,5 @@
 <%@ page import="com.ciphertool.sentencebuilder.entities.Word" %>
 
-
-
 <div class="fieldcontain ${hasErrors(bean: wordInstance, field: 'id.word', 'error')} ">
 	<label for="id.word">
 		<g:message code="word.word.label" default="Word" />
@@ -25,4 +23,3 @@
 	</label>
 	<g:field type="number" name="frequencyWeight" value="${wordInstance.frequencyWeight}" />
 </div>
-
