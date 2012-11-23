@@ -21,7 +21,7 @@ class GeneticAlgorithmController {
 		
 		cipherSolutionController.startServiceThread(params.cipherName, params.populationSize as Integer,
 			maxGenerations, params.survivalRate as Double,
-			params.mutationRate as Double, params.crossoverRate as Double);
+			params.mutationRate as Double, params.crossoverRate as Double, params.fitnessEvaluator as String, params.crossoverAlgorithm as String);
 		
 		render "Running"
 	}

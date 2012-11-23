@@ -12,6 +12,9 @@ import com.ciphertool.genetics.Population
 import com.ciphertool.zodiacengine.genetic.util.SolutionChromosomeGenerator
 import com.ciphertool.genetics.util.MaximizationFitnessComparator
 import com.ciphertool.zodiacengine.gui.controller.ZodiacCipherSolutionController
+import com.ciphertool.zodiacengine.genetic.util.CipherSolutionFitnessEvaluator;
+import com.ciphertool.genetics.algorithms.ConservativeCrossoverAlgorithm;
+import com.ciphertool.genetics.algorithms.LiberalCrossoverAlgorithm;
 
 //Place your Spring DSL code here
 beans = {
@@ -44,7 +47,9 @@ beans = {
 		wordListDao = ref ('wordListDao')
 	}
 
-	fitnessEvaluator(CipherSolutionFrequencyFitnessEvaluator) {
+	cipherSolutionFitnessEvaluator(CipherSolutionFitnessEvaluator) {}
+	
+	defaultFitnessEvaluator(CipherSolutionFrequencyFitnessEvaluator) {
 		expectedLetterFrequencies = 
 				["a" : grailsApplication.config.language.english.frequency.a as Double,
 				"b" : grailsApplication.config.language.english.frequency.b as Double,
@@ -76,12 +81,22 @@ beans = {
 
 	population(Population) {
 		chromosomeGenerator = ref('chromosomeGenerator')
-		fitnessEvaluator = ref('fitnessEvaluator')
+		fitnessEvaluator = ref('defaultFitnessEvaluator')
 		taskExecutor = ref('taskExecutor')
 	}
-		
-	crossoverAlgorithm(LowestCommonGroupCrossoverAlgorithm) {
-		fitnessEvaluator = ref('fitnessEvaluator')
+	
+	liberalCrossoverAlgorithm(LiberalCrossoverAlgorithm) {
+		fitnessEvaluator = ref('defaultFitnessEvaluator')
+		geneListDao = ref('geneListDao')
+	}
+
+	conservativeCrossoverAlgorithm(ConservativeCrossoverAlgorithm) {
+		fitnessEvaluator = ref('defaultFitnessEvaluator')
+		geneListDao = ref('geneListDao')
+	}
+	
+	defaultCrossoverAlgorithm(LowestCommonGroupCrossoverAlgorithm) {
+		fitnessEvaluator = ref('defaultFitnessEvaluator')
 		geneListDao = ref('geneListDao')
 	}
 	
@@ -90,8 +105,8 @@ beans = {
 	
 	geneticAlgorithm(ConcurrentBasicGeneticAlgorithm) {
 		finalSurvivorCount = grailsApplication.config.genetic.algorithm.finalSurvivorCount
-		crossoverAlgorithm = ref('crossoverAlgorithm')
-		fitnessEvaluator = ref('fitnessEvaluator')
+		crossoverAlgorithm = ref('defaultCrossoverAlgorithm')
+		fitnessEvaluator = ref('defaultFitnessEvaluator')
 		population = ref('population')
 		fitnessComparator = ref('fitnessComparator')
 		taskExecutor = ref('taskExecutor')
@@ -111,5 +126,7 @@ beans = {
 	cipherSolutionController(ZodiacCipherSolutionController) {
 		cipherSolutionService = ref('cipherSolutionService')
 		cipherDao = ref ('cipherDao')
+		fitnessEvaluatorDefault = ref('defaultFitnessEvaluator')
+		crossoverAlgorithmDefault = ref('defaultCrossoverAlgorithm')
 	}
 }

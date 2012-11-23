@@ -1,3 +1,6 @@
+<%@ page import="com.ciphertool.zodiacengine.genetic.util.FitnessEvaluatorType" %>
+<%@ page import="com.ciphertool.genetics.algorithms.CrossoverAlgorithmType" %>
+
 <div class="fieldcontain">
 	<label for="cipherName">
 		<g:message code="genetic.algorithm.cipher.label" default="Cipher to Solve for" />
@@ -60,4 +63,20 @@
 		
 	</label>
 	<g:field type="number" name="crossoverRate" value="0.05" min="0" max="1" step="0.01"/>
+</div>
+
+<div class="fieldcontain ">
+	<label for="fitnessEvaluator">
+		<g:message code="genetic.algorithm.fitnessEvaluator.label" default="Fitness Evaluator Algorithm" />
+		
+	</label>
+	<g:select name="fitnessEvaluator" from="${FitnessEvaluatorType?.values()}" optionKey="name" optionValue="displayName" value="${FitnessEvaluatorType.CIPHER_SOLUTION_FREQUENCY.getName()}" />
+</div>
+
+<div class="fieldcontain ">
+	<label for="crossoverAlgorithm">
+		<g:message code="genetic.algorithm.crossoverAlgorithm.label" default="Crossover Algorithm" />
+		
+	</label>
+	<g:select name="crossoverAlgorithm" from="${CrossoverAlgorithmType?.values()}" optionKey="name" optionValue="displayName" value="${CrossoverAlgorithmType.LOWEST_COMMON_GROUP.getName()}" />
 </div>
