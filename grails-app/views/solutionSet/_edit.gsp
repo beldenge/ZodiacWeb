@@ -16,6 +16,14 @@
 	<g:textField name="name" value="${solutionSetInstance?.name}" />
 </div>
 
+<div class="fieldcontain ${hasErrors(bean: solutionSetInstance, field: 'cipher.name', 'error')} ">
+	<label for="cipherName">
+		<g:message code="solutionSetInstance.cipher.label" default="Cipher" />
+		
+	</label>
+	<g:link controller="cipher" action="show" id="${solutionSetInstance?.cipher?.id}"><g:fieldValue bean="${solutionSetInstance}" field="cipher.name"/></g:link>
+</div>
+
 <div class="fieldcontain ${hasErrors(bean: solutionSetInstance, field: 'createdDate', 'error')} ">
 	<label for="createdDate">
 		<g:message code="solutionSet.createdDate.label" default="Created Date" />

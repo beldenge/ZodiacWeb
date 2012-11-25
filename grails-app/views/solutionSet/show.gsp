@@ -38,6 +38,13 @@
 				</li>
 				
 				<li class="fieldcontain">
+					<span id="cipher-label" class="property-label"><g:message code="solutionSet.cipher.label" default="Cipher" /></span>
+					
+						<span class="property-value" aria-labelledby="cipher-label"><g:link controller="cipher" action="show" id="${solutionSetInstance?.cipher?.id}">${solutionSetInstance?.cipher?.name.encodeAsHTML()}</g:link></span>
+					
+				</li>
+				
+				<li class="fieldcontain">
 					<span id="createdDate-label" class="property-label"><g:message code="solutionSet.createdDate.label" default="Created Date" /></span>
 					
 						<span class="property-value" aria-labelledby="createdDate-label"><g:formatDate date="${solutionSetInstance?.createdDate}" type="datetime" style="MEDIUM"/></span>

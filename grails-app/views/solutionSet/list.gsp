@@ -28,6 +28,8 @@
 					
 						<g:sortableColumn property="name" title="${message(code: 'solutionSet.name.label', default: 'Name')}" />
 						
+						<g:sortableColumn property="cipher" title="${message(code: 'solutionSet.cipher.label', default: 'Cipher')}" />
+						
 						<g:sortableColumn property="createdDate" title="${message(code: 'solutionSet.createdDate.label', default: 'Created Date')}" />
 					
 					</tr>
@@ -39,6 +41,8 @@
 						<td><g:link action="show" id="${solutionSetInstance.id}">${fieldValue(bean: solutionSetInstance, field: "id")}</g:link></td>
 					
 						<td>${fieldValue(bean: solutionSetInstance, field: "name")}</td>
+						
+						<td><g:link controller="cipher" action="show" id="${solutionSetInstance.cipher.id}">${fieldValue(bean: solutionSetInstance, field: "cipher.name")}</g:link></td>
 						
 						<td><g:formatDate date="${solutionSetInstance?.createdDate}" type="datetime" style="MEDIUM"/></td>
 					

@@ -21,7 +21,8 @@ class SolutionSetController {
     }
 
     def save() {
-        def solutionSetInstance = new SolutionSet(params.name)
+		def cipher = new Cipher(params.cipherId as Integer)
+        def solutionSetInstance = new SolutionSet(params.name, cipher)
         if (!solutionSetInstance.save(flush: true, insert:true)) {
             render(view: "create", model: [solutionSetInstance: solutionSetInstance])
             return
