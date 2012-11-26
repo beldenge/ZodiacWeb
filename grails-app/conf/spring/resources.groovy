@@ -15,6 +15,11 @@ import com.ciphertool.zodiacengine.gui.controller.ZodiacCipherSolutionController
 import com.ciphertool.zodiacengine.genetic.util.CipherSolutionFitnessEvaluator;
 import com.ciphertool.genetics.algorithms.ConservativeCrossoverAlgorithm;
 import com.ciphertool.genetics.algorithms.LiberalCrossoverAlgorithm;
+import com.ciphertool.genetics.util.ChromosomeHelper;
+import com.ciphertool.zodiacengine.genetic.dao.PlaintextSequenceDao;
+import com.ciphertool.genetics.algorithms.SingleSequenceMutationAlgorithm;
+import com.ciphertool.genetics.algorithms.LiberalMutationAlgorithm;
+import com.ciphertool.genetics.algorithms.ConservativeMutationAlgorithm;
 
 //Place your Spring DSL code here
 beans = {
@@ -85,9 +90,14 @@ beans = {
 		taskExecutor = ref('taskExecutor')
 	}
 	
+	chromosomeHelper(ChromosomeHelper) {
+		geneListDao = ref('geneListDao')
+	}
+	
 	liberalCrossoverAlgorithm(LiberalCrossoverAlgorithm) {
 		fitnessEvaluator = ref('defaultFitnessEvaluator')
 		geneListDao = ref('geneListDao')
+		chromosomeHelper = ref('chromosomeHelper')
 	}
 
 	conservativeCrossoverAlgorithm(ConservativeCrossoverAlgorithm) {
@@ -103,10 +113,27 @@ beans = {
 	fitnessComparator(MaximizationFitnessComparator) {
 	}
 	
+	sequenceDao(PlaintextSequenceDao) {
+	}
+	
+	defaultMutationAlgorithm(SingleSequenceMutationAlgorithm) {
+		sequenceDao = ref('sequenceDao')
+	}
+	
+	liberalMutationAlgorithm(LiberalMutationAlgorithm) {
+		geneListDao = ref('geneListDao')
+		chromosomeHelper = ref('chromosomeHelper')
+	}
+	
+	conservativeMutationAlgorithm(ConservativeMutationAlgorithm) {
+		geneListDao = ref('geneListDao')
+	}
+	
 	geneticAlgorithm(ConcurrentBasicGeneticAlgorithm) {
 		finalSurvivorCount = grailsApplication.config.genetic.algorithm.finalSurvivorCount
 		crossoverAlgorithm = ref('defaultCrossoverAlgorithm')
 		fitnessEvaluator = ref('defaultFitnessEvaluator')
+		mutationAlgorithm = ref('defaultMutationAlgorithm')
 		population = ref('population')
 		fitnessComparator = ref('fitnessComparator')
 		taskExecutor = ref('taskExecutor')
@@ -128,5 +155,6 @@ beans = {
 		cipherDao = ref ('cipherDao')
 		fitnessEvaluatorDefault = ref('defaultFitnessEvaluator')
 		crossoverAlgorithmDefault = ref('defaultCrossoverAlgorithm')
+		mutationAlgorithmDefault = ref('defaultMutationAlgorithm')
 	}
 }
