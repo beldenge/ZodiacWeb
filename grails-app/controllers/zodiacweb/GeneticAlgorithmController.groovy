@@ -19,9 +19,9 @@ class GeneticAlgorithmController {
 	def execute() {
 		def maxGenerations = ((params.runContinuously as Boolean) ? -1 : params.generations as Integer)
 		
-		cipherSolutionController.startServiceThread(params.cipherName, params.populationSize as Integer,
-			maxGenerations, params.survivalRate as Double,
-			params.mutationRate as Double, params.crossoverRate as Double, params.fitnessEvaluator as String, params.crossoverAlgorithm as String, params.mutationAlgorithm as String);
+		cipherSolutionController.startServiceThread(params.cipherName, params.populationSize as Integer, params.lifespan as Integer,
+			maxGenerations, params.survivalRate as Double, params.mutationRate as Double, params.crossoverRate as Double, 
+			params.fitnessEvaluator as String, params.crossoverAlgorithm as String, params.mutationAlgorithm as String);
 		
 		render "Running"
 	}

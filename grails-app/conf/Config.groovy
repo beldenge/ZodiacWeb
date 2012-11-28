@@ -113,6 +113,7 @@ taskExecutor.queueCapacity=2000
 // Genetic algorithm properties
 // ---------------------------------------
 genetic.population.size=100
+genetic.algorithm.lifespan=-1
 genetic.algorithm.survivalRate=0.9
 genetic.algorithm.mutationRate=0.001
 genetic.algorithm.crossoverRate=0.05

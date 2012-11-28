@@ -88,6 +88,7 @@ beans = {
 		chromosomeGenerator = ref('chromosomeGenerator')
 		fitnessEvaluator = ref('defaultFitnessEvaluator')
 		taskExecutor = ref('taskExecutor')
+		lifespan = grailsApplication.config.genetic.algorithm.lifespan
 	}
 	
 	chromosomeHelper(ChromosomeHelper) {

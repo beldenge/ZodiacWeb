@@ -43,6 +43,14 @@
 </div>
 
 <div class="fieldcontain">
+	<label for="lifespan">
+		<g:message code="genetic.algorithm.lifespan.label" default="Individual Lifespan (generations)" />
+		
+	</label>
+	<g:field type="number" name="lifespan" value="-1" min="-1" max="1000" step="1"/>
+</div>
+
+<div class="fieldcontain">
 	<label for="survivalRate">
 		<g:message code="genetic.algorithm.survival.rate.label" default="Survival Rate" />
 		
