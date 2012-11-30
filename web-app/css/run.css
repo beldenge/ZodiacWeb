@@ -1,0 +1,14 @@
+#overlay {
+    /* stretch the overlay by attaching all four corners */
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    /* make it stay on top */
+    z-index: 999;
+    /* use any background color you like; rgba would be nice, but older IE will ignore it*/
+    background: #000;
+    opacity: 0.8;
+    filter: alpha(opacity=80);
+}

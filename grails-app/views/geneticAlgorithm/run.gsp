@@ -4,6 +4,67 @@
 		<meta name="layout" content="main">
 		<title><g:message code="genetic.algorithm.run.label" /></title>
 		<g:javascript library="jquery" />
+		<g:javascript src="spin.js" />
+		<g:javascript>
+			var opts = {
+				lines: 13, // The number of lines to draw
+				length: 17, // The length of each line
+				width: 12, // The line thickness
+				radius: 40, // The radius of the inner circle
+				corners: 1, // Corner roundness (0..1)
+				rotate: 0, // The rotation offset
+				color: '#FFF', // #rgb or #rrggbb
+				speed: 1, // Rounds per second
+				trail: 60, // Afterglow percentage
+				shadow: false, // Whether to render a shadow
+				hwaccel: false, // Whether to use hardware acceleration
+				className: 'spinner', // The CSS class to assign to the spinner
+				zIndex: 2e9, // The z-index (defaults to 2000000000)
+				top: 'auto', // Top position relative to parent in px
+				left: 'auto' // Left position relative to parent in px
+			};
+
+			var target = document.getElementById('overlay');
+			var spinner = new Spinner(opts);
+
+			window.onload = function(){
+				//Check if the program is already running and disable the form if so
+				if (document.getElementById('executionResult').innerHTML.trim() == "Running") {
+					disableForm();
+				}
+			};
+			
+			function disableForm() {
+				$('#executionResult').html("Running");
+				$('[name="start"]').attr("disabled", "disabled");
+				$('input').not('[name="stop"]').attr("disabled", "disabled");
+				$('select').attr("disabled", "disabled");
+				$('#overlay').show();
+				spinner.spin(target);
+			}
+			
+			function enableForm() {
+				$('[name="start"]').removeAttr("disabled");
+				$('input').not('[name="stop"]').removeAttr("disabled");
+				$('select').removeAttr("disabled");
+				$('#overlay').hide();
+				spinner.stop();
+			}
+			
+			function notifyStopping() {
+				$('#executionResult').html("Stopping.  Please wait...");
+			}
+			
+			function toggleGenerationsSpinner() {
+				if ($('[name="runContinuously"]').attr("checked")) {
+					$('[name="generations"]').attr("disabled", "disabled");
+				}
+				else {
+					$('[name="generations"]').removeAttr("disabled");
+				}
+			}
+		</g:javascript>
+		<link rel="stylesheet" href="${resource(dir: 'css', file: 'run.css')}" type="text/css">
 	</head>
 	<body>
 		<div class="nav" role="navigation">
@@ -25,14 +86,18 @@
 			</g:hasErrors>
 			<g:form action="execute" >
 				<fieldset class="form">
+					<div id="overlay" style="display: none;"></div>
 					<g:render template="run"/>
 				</fieldset>
 				<fieldset class="buttons">
-					<g:submitToRemote action="execute" name="start" class="save" update="executionResult" value="${message(code: 'genetic.algorithm.start.label', default: 'Start')}" />
-					<g:submitToRemote action="halt" name="stop" class="delete" update="executionResult" value="${message(code: 'genetic.algorithm.stop.label', default: 'Stop')}" />
+					<g:submitToRemote action="execute" name="start" class="save" after="disableForm()" onComplete="enableForm()" update="executionResult" value="${message(code: 'genetic.algorithm.start.label', default: 'Start')}" />
+					<g:submitToRemote action="halt" name="stop" class="delete" after="notifyStopping()" onComplete="enableForm()" update="executionResult" value="${message(code: 'genetic.algorithm.stop.label', default: 'Stop')}" />
 				</fieldset>
 			</g:form>
 		</div>
-		<div id="executionResult">Not started</div>
+		<div class="message" id="executionResult">
+			<g:if test="${runState}">Running</g:if>
+			<g:else>Not started</g:else>
+		</div>
 	</body>
 </html>
