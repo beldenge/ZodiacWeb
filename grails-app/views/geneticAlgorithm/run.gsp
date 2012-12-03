@@ -45,10 +45,12 @@
 			
 			function enableForm() {
 				$('[name="start"]').removeAttr("disabled");
-				$('input').not('[name="stop"]').removeAttr("disabled");
+				$('input').not('[name="stop"], [name="generations"]').removeAttr("disabled");
+				toggleGenerationsSpinner(); //the generations spinner might still need to be disabled
 				$('select').removeAttr("disabled");
 				$('#overlay').hide();
 				spinner.stop();
+				$('#executionResult').html("Stopped");
 			}
 			
 			function notifyStopping() {

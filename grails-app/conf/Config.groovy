@@ -107,7 +107,7 @@ app.commands.after='powercfg -setacvalueindex SCHEME_CURRENT SUB_PROCESSOR PROCT
 // ---------------------------------------
 taskExecutor.corePoolSize=8
 taskExecutor.maxPoolSize=8
-taskExecutor.queueCapacity=2000
+taskExecutor.queueCapacity=10000
 
 // ---------------------------------------
 // Genetic algorithm properties

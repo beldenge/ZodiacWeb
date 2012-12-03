@@ -31,7 +31,7 @@
 		<g:message code="genetic.algorithm.run.continuously.label" default="Run until user stops" />
 		
 	</label>
-	<g:checkBox name="runContinuously" value="${false}" />
+	<g:checkBox name="runContinuously" onClick="toggleGenerationsSpinner()" value="${false}" />
 </div>
 
 <div class="fieldcontain">
