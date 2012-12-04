@@ -20,6 +20,7 @@ import com.ciphertool.zodiacengine.genetic.dao.PlaintextSequenceDao;
 import com.ciphertool.genetics.algorithms.SingleSequenceMutationAlgorithm;
 import com.ciphertool.genetics.algorithms.LiberalMutationAlgorithm;
 import com.ciphertool.genetics.algorithms.ConservativeMutationAlgorithm;
+import com.ciphertool.genetics.dao.ExecutionStatisticsDao;
 
 //Place your Spring DSL code here
 beans = {
@@ -130,6 +131,10 @@ beans = {
 		geneListDao = ref('geneListDao')
 	}
 	
+	executionStatisticsDao(ExecutionStatisticsDao) {
+		sessionFactory = ref('sessionFactory')
+	}
+	
 	geneticAlgorithm(ConcurrentBasicGeneticAlgorithm) {
 		finalSurvivorCount = grailsApplication.config.genetic.algorithm.finalSurvivorCount
 		crossoverAlgorithm = ref('defaultCrossoverAlgorithm')
@@ -138,6 +143,7 @@ beans = {
 		population = ref('population')
 		fitnessComparator = ref('fitnessComparator')
 		taskExecutor = ref('taskExecutor')
+		executionStatisticsDao = ref("executionStatisticsDao")
 	}
 	
 	solutionSetDao(SolutionSetDao) {

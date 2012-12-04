@@ -13,6 +13,8 @@
 		<mapping class='com.ciphertool.zodiacengine.entities.Solution' />
 		<mapping class='com.ciphertool.zodiacengine.entities.Plaintext' />
 		<mapping class='com.ciphertool.sentencebuilder.entities.Word' />
+		<mapping class='com.ciphertool.genetics.entities.ExecutionStatistics' />
+		<mapping class='com.ciphertool.genetics.entities.GenerationStatistics' />
 
 	</session-factory>
 
