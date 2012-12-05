@@ -102,6 +102,7 @@
 						<li class="controller"><g:link controller="Cipher">Cipher</g:link></li>
 						<li class="controller"><g:link controller="Ciphertext">Ciphertext</g:link></li>
 						<li class="controller"><g:link controller="Word">Word</g:link></li>
+						<li class="controller"><g:link controller="ExecutionStatistics">Execution Statistics</g:link></li>
 				</ul>
 			</div>
 		</div>
