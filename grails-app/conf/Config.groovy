@@ -124,6 +124,8 @@ genetic.algorithm.finalSurvivorCount=10
 // ---------------------------------------
 // English language properties
 // ---------------------------------------
+language.english.averageWordLength=5.1
+
 // Source: (http://www.math.cornell.edu/~mec/2003-2004/cryptography/subs/frequencies.html)
 language.english.frequency.a=0.0812
 language.english.frequency.b=0.0149

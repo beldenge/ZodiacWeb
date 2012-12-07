@@ -3,7 +3,10 @@ import com.ciphertool.zodiacengine.dao.SolutionSetDao
 import com.ciphertool.genetics.algorithms.ConcurrentBasicGeneticAlgorithm
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor
 import com.ciphertool.genetics.algorithms.LowestCommonGroupCrossoverAlgorithm
+import com.ciphertool.zodiacengine.genetic.util.CipherSolutionTruncatedFitnessEvaluator
 import com.ciphertool.zodiacengine.genetic.util.CipherSolutionFrequencyFitnessEvaluator
+import com.ciphertool.zodiacengine.genetic.util.CipherSolutionFrequencyTruncatedFitnessEvaluator
+import com.ciphertool.zodiacengine.genetic.util.CipherSolutionFrequencyLengthFitnessEvaluator
 import com.ciphertool.zodiacengine.dao.CipherDao
 import com.ciphertool.zodiacengine.genetic.dao.WordGeneListDao
 import com.ciphertool.sentencebuilder.dao.FrequencyWordListDao
@@ -52,8 +55,10 @@ beans = {
 	chromosomeGenerator(SolutionChromosomeGenerator) {
 		wordListDao = ref ('wordListDao')
 	}
-
+	
 	cipherSolutionFitnessEvaluator(CipherSolutionFitnessEvaluator) {}
+	
+	cipherSolutionTruncatedFitnessEvaluator(CipherSolutionTruncatedFitnessEvaluator) {}
 	
 	defaultFitnessEvaluator(CipherSolutionFrequencyFitnessEvaluator) {
 		expectedLetterFrequencies = 
@@ -83,6 +88,67 @@ beans = {
 				"x" : grailsApplication.config.language.english.frequency.x as Double,
 				"y" : grailsApplication.config.language.english.frequency.y as Double,
 				"z" : grailsApplication.config.language.english.frequency.z as Double]
+	}
+	
+	frequencyFitnessTruncatedEvaluator(CipherSolutionFrequencyTruncatedFitnessEvaluator) {
+		expectedLetterFrequencies =
+				["a" : grailsApplication.config.language.english.frequency.a as Double,
+				"b" : grailsApplication.config.language.english.frequency.b as Double,
+				"c" : grailsApplication.config.language.english.frequency.c as Double,
+				"d" : grailsApplication.config.language.english.frequency.d as Double,
+				"e" : grailsApplication.config.language.english.frequency.e as Double,
+				"f" : grailsApplication.config.language.english.frequency.f as Double,
+				"g" : grailsApplication.config.language.english.frequency.g as Double,
+				"h" : grailsApplication.config.language.english.frequency.h as Double,
+				"i" : grailsApplication.config.language.english.frequency.i as Double,
+				"j" : grailsApplication.config.language.english.frequency.j as Double,
+				"k" : grailsApplication.config.language.english.frequency.k as Double,
+				"l" : grailsApplication.config.language.english.frequency.l as Double,
+				"m" : grailsApplication.config.language.english.frequency.m as Double,
+				"n" : grailsApplication.config.language.english.frequency.n as Double,
+				"o" : grailsApplication.config.language.english.frequency.o as Double,
+				"p" : grailsApplication.config.language.english.frequency.p as Double,
+				"q" : grailsApplication.config.language.english.frequency.q as Double,
+				"r" : grailsApplication.config.language.english.frequency.r as Double,
+				"s" : grailsApplication.config.language.english.frequency.s as Double,
+				"t" : grailsApplication.config.language.english.frequency.t as Double,
+				"u" : grailsApplication.config.language.english.frequency.u as Double,
+				"v" : grailsApplication.config.language.english.frequency.v as Double,
+				"w" : grailsApplication.config.language.english.frequency.w as Double,
+				"x" : grailsApplication.config.language.english.frequency.x as Double,
+				"y" : grailsApplication.config.language.english.frequency.y as Double,
+				"z" : grailsApplication.config.language.english.frequency.z as Double]
+	}
+	
+	cipherSolutionFrequencyLengthFitnessEvaluator(CipherSolutionFrequencyLengthFitnessEvaluator) {
+		expectedLetterFrequencies =
+				["a" : grailsApplication.config.language.english.frequency.a as Double,
+				"b" : grailsApplication.config.language.english.frequency.b as Double,
+				"c" : grailsApplication.config.language.english.frequency.c as Double,
+				"d" : grailsApplication.config.language.english.frequency.d as Double,
+				"e" : grailsApplication.config.language.english.frequency.e as Double,
+				"f" : grailsApplication.config.language.english.frequency.f as Double,
+				"g" : grailsApplication.config.language.english.frequency.g as Double,
+				"h" : grailsApplication.config.language.english.frequency.h as Double,
+				"i" : grailsApplication.config.language.english.frequency.i as Double,
+				"j" : grailsApplication.config.language.english.frequency.j as Double,
+				"k" : grailsApplication.config.language.english.frequency.k as Double,
+				"l" : grailsApplication.config.language.english.frequency.l as Double,
+				"m" : grailsApplication.config.language.english.frequency.m as Double,
+				"n" : grailsApplication.config.language.english.frequency.n as Double,
+				"o" : grailsApplication.config.language.english.frequency.o as Double,
+				"p" : grailsApplication.config.language.english.frequency.p as Double,
+				"q" : grailsApplication.config.language.english.frequency.q as Double,
+				"r" : grailsApplication.config.language.english.frequency.r as Double,
+				"s" : grailsApplication.config.language.english.frequency.s as Double,
+				"t" : grailsApplication.config.language.english.frequency.t as Double,
+				"u" : grailsApplication.config.language.english.frequency.u as Double,
+				"v" : grailsApplication.config.language.english.frequency.v as Double,
+				"w" : grailsApplication.config.language.english.frequency.w as Double,
+				"x" : grailsApplication.config.language.english.frequency.x as Double,
+				"y" : grailsApplication.config.language.english.frequency.y as Double,
+				"z" : grailsApplication.config.language.english.frequency.z as Double]
+		averageWordLength = grailsApplication.config.language.english.averageWordLength
 	}
 
 	population(Population) {
