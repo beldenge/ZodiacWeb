@@ -1,6 +1,7 @@
 <%@ page import="com.ciphertool.zodiacengine.genetic.util.FitnessEvaluatorType" %>
-<%@ page import="com.ciphertool.genetics.algorithms.CrossoverAlgorithmType" %>
-<%@ page import="com.ciphertool.genetics.algorithms.MutationAlgorithmType" %>
+<%@ page import="com.ciphertool.genetics.algorithms.crossover.CrossoverAlgorithmType" %>
+<%@ page import="com.ciphertool.genetics.algorithms.mutation.MutationAlgorithmType" %>
+<%@ page import="com.ciphertool.genetics.algorithms.selection.SelectionAlgorithmType" %>
 
 <div class="fieldcontain">
 	<label for="cipherName">
@@ -96,4 +97,12 @@
 		
 	</label>
 	<g:select name="mutationAlgorithm" from="${MutationAlgorithmType?.values()}" optionKey="name" optionValue="displayName" value="${MutationAlgorithmType.SINGLE_SEQUENCE.getName()}" />
+</div>
+
+<div class="fieldcontain ">
+	<label for="selectionAlgorithm">
+		<g:message code="genetic.algorithm.selectionAlgorithm.label" default="Selection Algorithm" />
+		
+	</label>
+	<g:select name="selectionAlgorithm" from="${SelectionAlgorithmType?.values()}" optionKey="name" optionValue="displayName" value="${SelectionAlgorithmType.PROBABILISTIC.getName()}" />
 </div>

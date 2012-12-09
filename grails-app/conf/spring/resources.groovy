@@ -3,6 +3,7 @@ import com.ciphertool.zodiacengine.dao.SolutionSetDao
 import com.ciphertool.genetics.algorithms.ConcurrentBasicGeneticAlgorithm
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor
 import com.ciphertool.genetics.algorithms.crossover.LowestCommonGroupCrossoverAlgorithm
+import com.ciphertool.zodiacengine.genetic.util.CipherSolutionKnownSolutionFitnessEvaluator;
 import com.ciphertool.zodiacengine.genetic.util.CipherSolutionTruncatedFitnessEvaluator
 import com.ciphertool.zodiacengine.genetic.util.CipherSolutionFrequencyFitnessEvaluator
 import com.ciphertool.zodiacengine.genetic.util.CipherSolutionFrequencyTruncatedFitnessEvaluator
@@ -25,6 +26,8 @@ import com.ciphertool.genetics.algorithms.mutation.SingleSequenceMutationAlgorit
 import com.ciphertool.genetics.algorithms.mutation.LiberalMutationAlgorithm;
 import com.ciphertool.genetics.algorithms.mutation.ConservativeMutationAlgorithm;
 import com.ciphertool.genetics.dao.ExecutionStatisticsDao;
+import com.ciphertool.genetics.algorithms.selection.TruncationSelectionAlgorithm;
+import com.ciphertool.genetics.algorithms.selection.ProbabilisticSelectionAlgorithm;
 
 //Place your Spring DSL code here
 beans = {
@@ -56,6 +59,8 @@ beans = {
 	chromosomeGenerator(SolutionChromosomeGenerator) {
 		wordListDao = ref ('wordListDao')
 	}
+	
+	cipherSolutionKnownSolutionFitnessEvaluator(CipherSolutionKnownSolutionFitnessEvaluator) {}
 	
 	cipherSolutionFitnessEvaluator(CipherSolutionFitnessEvaluator) {}
 	
@@ -152,9 +157,12 @@ beans = {
 		averageWordLength = grailsApplication.config.language.english.averageWordLength
 	}
 
+	defaultFitnessComparator(MaximizationFitnessComparator) {}
+	
 	population(Population) {
 		chromosomeGenerator = ref('chromosomeGenerator')
 		fitnessEvaluator = ref('defaultFitnessEvaluator')
+		fitnessComparator = ref('defaultFitnessComparator')
 		taskExecutor = ref('taskExecutor')
 		lifespan = grailsApplication.config.genetic.algorithm.lifespan
 	}
@@ -184,11 +192,7 @@ beans = {
 		geneListDao = ref('geneListDao')
 	}
 	
-	fitnessComparator(MaximizationFitnessComparator) {
-	}
-	
-	sequenceDao(PlaintextSequenceDao) {
-	}
+	sequenceDao(PlaintextSequenceDao) {}
 	
 	defaultMutationAlgorithm(SingleSequenceMutationAlgorithm) {
 		sequenceDao = ref('sequenceDao')
@@ -203,6 +207,10 @@ beans = {
 		geneListDao = ref('geneListDao')
 	}
 	
+	defaultSelectionAlgorithm(ProbabilisticSelectionAlgorithm) {}
+	
+	truncationSelectionAlgorithm(TruncationSelectionAlgorithm) {}
+	
 	executionStatisticsDao(ExecutionStatisticsDao) {
 		sessionFactory = ref('sessionFactory')
 	}
@@ -211,8 +219,8 @@ beans = {
 		finalSurvivorCount = grailsApplication.config.genetic.algorithm.finalSurvivorCount
 		crossoverAlgorithm = ref('defaultCrossoverAlgorithm')
 		mutationAlgorithm = ref('defaultMutationAlgorithm')
+		selectionAlgorithm = ref('defaultSelectionAlgorithm')
 		population = ref('population')
-		fitnessComparator = ref('fitnessComparator')
 		taskExecutor = ref('taskExecutor')
 		executionStatisticsDao = ref("executionStatisticsDao")
 	}
@@ -234,5 +242,6 @@ beans = {
 		fitnessEvaluatorDefault = ref('defaultFitnessEvaluator')
 		crossoverAlgorithmDefault = ref('defaultCrossoverAlgorithm')
 		mutationAlgorithmDefault = ref('defaultMutationAlgorithm')
+		selectionAlgorithmDefault = ref('defaultSelectionAlgorithm')
 	}
 }

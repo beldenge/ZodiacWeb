@@ -25,7 +25,7 @@ class GeneticAlgorithmController {
 		
 		cipherSolutionController.startServiceThread(params.cipherName, params.populationSize as Integer, params.lifespan as Integer,
 			maxGenerations, params.survivalRate as Double, params.mutationRate as Double, params.crossoverRate as Double, 
-			params.fitnessEvaluator as String, params.crossoverAlgorithm as String, params.mutationAlgorithm as String);
+			params.fitnessEvaluator as String, params.crossoverAlgorithm as String, params.mutationAlgorithm as String, params.selectionAlgorithm as String);
 		
 		//Sleep first since it might take a second for the service to start fully
 		Thread.sleep(1000);
