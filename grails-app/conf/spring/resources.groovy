@@ -2,7 +2,7 @@ import com.ciphertool.zodiacengine.gui.service.GeneticCipherSolutionService
 import com.ciphertool.zodiacengine.dao.SolutionSetDao
 import com.ciphertool.genetics.algorithms.ConcurrentBasicGeneticAlgorithm
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor
-import com.ciphertool.genetics.algorithms.LowestCommonGroupCrossoverAlgorithm
+import com.ciphertool.genetics.algorithms.crossover.LowestCommonGroupCrossoverAlgorithm
 import com.ciphertool.zodiacengine.genetic.util.CipherSolutionTruncatedFitnessEvaluator
 import com.ciphertool.zodiacengine.genetic.util.CipherSolutionFrequencyFitnessEvaluator
 import com.ciphertool.zodiacengine.genetic.util.CipherSolutionFrequencyTruncatedFitnessEvaluator
@@ -16,13 +16,14 @@ import com.ciphertool.zodiacengine.genetic.util.SolutionChromosomeGenerator
 import com.ciphertool.genetics.util.MaximizationFitnessComparator
 import com.ciphertool.zodiacengine.gui.controller.ZodiacCipherSolutionController
 import com.ciphertool.zodiacengine.genetic.util.CipherSolutionFitnessEvaluator;
-import com.ciphertool.genetics.algorithms.ConservativeCrossoverAlgorithm;
-import com.ciphertool.genetics.algorithms.LiberalCrossoverAlgorithm;
+import com.ciphertool.genetics.algorithms.crossover.ConservativeCrossoverAlgorithm;
+import com.ciphertool.genetics.algorithms.crossover.LiberalCrossoverAlgorithm;
+import com.ciphertool.genetics.algorithms.crossover.ConservativeCentromereCrossoverAlgorithm;
 import com.ciphertool.genetics.util.ChromosomeHelper;
 import com.ciphertool.zodiacengine.genetic.dao.PlaintextSequenceDao;
-import com.ciphertool.genetics.algorithms.SingleSequenceMutationAlgorithm;
-import com.ciphertool.genetics.algorithms.LiberalMutationAlgorithm;
-import com.ciphertool.genetics.algorithms.ConservativeMutationAlgorithm;
+import com.ciphertool.genetics.algorithms.mutation.SingleSequenceMutationAlgorithm;
+import com.ciphertool.genetics.algorithms.mutation.LiberalMutationAlgorithm;
+import com.ciphertool.genetics.algorithms.mutation.ConservativeMutationAlgorithm;
 import com.ciphertool.genetics.dao.ExecutionStatisticsDao;
 
 //Place your Spring DSL code here
@@ -178,6 +179,11 @@ beans = {
 		geneListDao = ref('geneListDao')
 	}
 	
+	conservativeCentromereCrossoverAlgorithm(ConservativeCentromereCrossoverAlgorithm) {
+		fitnessEvaluator = ref('defaultFitnessEvaluator')
+		geneListDao = ref('geneListDao')
+	}
+	
 	fitnessComparator(MaximizationFitnessComparator) {
 	}
 	
@@ -204,7 +210,6 @@ beans = {
 	geneticAlgorithm(ConcurrentBasicGeneticAlgorithm) {
 		finalSurvivorCount = grailsApplication.config.genetic.algorithm.finalSurvivorCount
 		crossoverAlgorithm = ref('defaultCrossoverAlgorithm')
-		fitnessEvaluator = ref('defaultFitnessEvaluator')
 		mutationAlgorithm = ref('defaultMutationAlgorithm')
 		population = ref('population')
 		fitnessComparator = ref('fitnessComparator')
