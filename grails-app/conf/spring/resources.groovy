@@ -8,6 +8,8 @@ import com.ciphertool.zodiacengine.genetic.util.CipherSolutionTruncatedFitnessEv
 import com.ciphertool.zodiacengine.genetic.util.CipherSolutionFrequencyFitnessEvaluator
 import com.ciphertool.zodiacengine.genetic.util.CipherSolutionFrequencyTruncatedFitnessEvaluator
 import com.ciphertool.zodiacengine.genetic.util.CipherSolutionFrequencyLengthFitnessEvaluator
+import com.ciphertool.zodiacengine.genetic.util.CipherSolutionUniqueWordFitnessEvaluator;
+import com.ciphertool.zodiacengine.genetic.util.CipherSolutionMatchDistanceFitnessEvaluator;
 import com.ciphertool.zodiacengine.dao.CipherDao
 import com.ciphertool.zodiacengine.genetic.dao.WordGeneListDao
 import com.ciphertool.sentencebuilder.dao.FrequencyWordListDao
@@ -63,6 +65,10 @@ beans = {
 	cipherSolutionKnownSolutionFitnessEvaluator(CipherSolutionKnownSolutionFitnessEvaluator) {}
 	
 	cipherSolutionFitnessEvaluator(CipherSolutionFitnessEvaluator) {}
+	
+	cipherSolutionMatchDistanceFitnessEvaluator(CipherSolutionMatchDistanceFitnessEvaluator) {}
+	
+	cipherSolutionUniqueWordFitnessEvaluator(CipherSolutionUniqueWordFitnessEvaluator) {}
 	
 	cipherSolutionTruncatedFitnessEvaluator(CipherSolutionTruncatedFitnessEvaluator) {}
 	
