@@ -249,5 +249,6 @@ beans = {
 		crossoverAlgorithmDefault = ref('defaultCrossoverAlgorithm')
 		mutationAlgorithmDefault = ref('defaultMutationAlgorithm')
 		selectionAlgorithmDefault = ref('defaultSelectionAlgorithm')
+		knownSolutionFitnessEvaluator = ref('cipherSolutionKnownSolutionFitnessEvaluator')
 	}
 }

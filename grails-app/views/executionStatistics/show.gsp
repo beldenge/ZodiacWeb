@@ -34,6 +34,29 @@
 						]
 					}
 				);
+				if (${knownSolutionProximityList} != null && ${knownSolutionProximityList.size()} != 0) {
+					$.jqplot('proximity-chart', [${knownSolutionProximityList}], 
+						{
+							title: 'Proximity to Known Solution Over Time',
+							axes: {
+								xaxis: {
+									min: 0,
+									label: 'Generations'
+								},
+								yaxis: {
+									max: 100,
+									label: 'Proximity %'
+								}
+							},
+							series: [
+								{
+									label: 'Proximity %',
+									showMarker: false
+								}
+							]
+						}
+					);
+				}
 				$.jqplot('performance-chart', [${executionTimeList}], 
 					{
 						title: 'Performance Over Time',
@@ -167,6 +190,7 @@
 			</ol>
 			
 			<div id="fitness-chart" style="height:400px;width:900px;margin-left: auto;margin-right: auto; "></div><br />
+			<g:if test="${knownSolutionProximityList != null && knownSolutionProximityList.size() != 0}"><div id="proximity-chart" style="height:400px;width:900px;margin-left: auto;margin-right: auto; "></div><br /></g:if>
 			<div id="performance-chart" style="height:400px;width:900px;margin-left: auto;margin-right: auto; "></div><br />
 			
 			<g:form>

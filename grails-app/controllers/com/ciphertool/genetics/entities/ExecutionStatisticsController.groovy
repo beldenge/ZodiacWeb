@@ -43,7 +43,12 @@ class ExecutionStatisticsController {
 		def averageFitnessList = executionStatisticsInstance.getGenerationStatisticsList().collect{ it.averageFitness }
 		def executionTimeList = executionStatisticsInstance.getGenerationStatisticsList().collect{ it.executionTime }
 		
-		[executionStatisticsInstance: executionStatisticsInstance, bestFitnessList: new JSONArray(bestFitnessList), averageFitnessList: new JSONArray(averageFitnessList), executionTimeList: new JSONArray(executionTimeList)]
+		/*
+		 * We want the known solution proximity only if it is not null, since this is not a required statistic
+		 */
+		def knownSolutionProximityList = executionStatisticsInstance.getGenerationStatisticsList().findAll{ it.knownSolutionProximity != null }.collect{ it.knownSolutionProximity }
+		
+		[executionStatisticsInstance: executionStatisticsInstance, bestFitnessList: new JSONArray(bestFitnessList), averageFitnessList: new JSONArray(averageFitnessList), executionTimeList: new JSONArray(executionTimeList), knownSolutionProximityList: new JSONArray(knownSolutionProximityList)]
     }
 
     def edit(Long id) {

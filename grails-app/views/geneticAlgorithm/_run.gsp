@@ -106,3 +106,11 @@
 	</label>
 	<g:select name="selectionAlgorithm" from="${SelectionAlgorithmType?.values()}" optionKey="name" optionValue="displayName" value="${SelectionAlgorithmType.PROBABILISTIC.getName()}" />
 </div>
+
+<div class="fieldcontain">
+	<label for="compareToKnownSolution">
+		<g:message code="genetic.algorithm.compareToKnownSolution.label" default="Compare to known solution" />
+		
+	</label>
+	<g:checkBox name="compareToKnownSolution" value="${false}" />
+</div>
