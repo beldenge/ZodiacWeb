@@ -44,6 +44,7 @@
 									label: 'Generations'
 								},
 								yaxis: {
+									min: 0,
 									max: 100,
 									label: 'Proximity %'
 								}
