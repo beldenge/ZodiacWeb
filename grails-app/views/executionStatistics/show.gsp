@@ -67,6 +67,7 @@
 								label: 'Generations'
 							},
 							yaxis: {
+								min:0,
 								label: 'Milliseconds'
 							}
 						},
