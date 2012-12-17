@@ -15,7 +15,7 @@ import com.ciphertool.zodiacengine.genetic.dao.WordGeneListDao
 import com.ciphertool.sentencebuilder.dao.FrequencyWordListDao
 import com.ciphertool.sentencebuilder.dao.WordDao
 import com.ciphertool.genetics.Population
-import com.ciphertool.zodiacengine.genetic.util.SolutionChromosomeGenerator
+import com.ciphertool.zodiacengine.genetic.util.SolutionBreeder
 import com.ciphertool.genetics.util.MaximizationFitnessComparator
 import com.ciphertool.zodiacengine.gui.controller.ZodiacCipherSolutionController
 import com.ciphertool.zodiacengine.genetic.util.CipherSolutionFitnessEvaluator;
@@ -58,7 +58,7 @@ beans = {
 		wordListDao = ref('wordListDao')
 	}
 	
-	chromosomeGenerator(SolutionChromosomeGenerator) {
+	breeder(SolutionBreeder) {
 		wordListDao = ref ('wordListDao')
 	}
 	
@@ -166,7 +166,7 @@ beans = {
 	defaultFitnessComparator(MaximizationFitnessComparator) {}
 	
 	population(Population) {
-		chromosomeGenerator = ref('chromosomeGenerator')
+		breeder = ref('breeder')
 		fitnessEvaluator = ref('defaultFitnessEvaluator')
 		fitnessComparator = ref('defaultFitnessComparator')
 		taskExecutor = ref('taskExecutor')
