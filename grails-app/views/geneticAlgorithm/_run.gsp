@@ -8,7 +8,7 @@
 		<g:message code="genetic.algorithm.cipher.label" default="Cipher to Solve for" />
 		
 	</label>
-	<g:select name="cipherName" from="${cipherInstanceList}" optionKey="name" optionValue="name" />
+	<g:select name="cipherName" from="${cipherInstanceList}" value="zodiac408" optionKey="name" optionValue="name" />
 </div>
 
 <div class="fieldcontain">
@@ -56,7 +56,7 @@
 		<g:message code="genetic.algorithm.survival.rate.label" default="Survival Rate" />
 		
 	</label>
-	<g:field type="number" name="survivalRate" value="0.9" min="0" max="1" step="0.01"/>
+	<g:field type="number" name="survivalRate" value="0.95" min="0" max="1" step="0.01"/>
 </div>
 
 <div class="fieldcontain">
@@ -64,7 +64,7 @@
 		<g:message code="genetic.algorithm.mutation.rate.label" default="Mutation Rate" />
 		
 	</label>
-	<g:field type="number" name="mutationRate" value="0.001" min="0" max="1" step="0.001"/>
+	<g:field type="number" name="mutationRate" value="0.01" min="0" max="1" step="0.001"/>
 </div>
 
 <div class="fieldcontain">
@@ -80,7 +80,7 @@
 		<g:message code="genetic.algorithm.fitnessEvaluator.label" default="Fitness Evaluator Algorithm" />
 		
 	</label>
-	<g:select name="fitnessEvaluator" from="${FitnessEvaluatorType?.values()}" optionKey="name" optionValue="displayName" value="${FitnessEvaluatorType.CIPHER_SOLUTION_FREQUENCY.getName()}" />
+	<g:select name="fitnessEvaluator" from="${FitnessEvaluatorType?.values()}" optionKey="name" optionValue="displayName" value="${FitnessEvaluatorType.CIPHER_SOLUTION_MATCH_DISTANCE.getName()}" />
 </div>
 
 <div class="fieldcontain ">
@@ -96,7 +96,7 @@
 		<g:message code="genetic.algorithm.mutationAlgorithm.label" default="Mutation Algorithm" />
 		
 	</label>
-	<g:select name="mutationAlgorithm" from="${MutationAlgorithmType?.values()}" optionKey="name" optionValue="displayName" value="${MutationAlgorithmType.SINGLE_SEQUENCE.getName()}" />
+	<g:select name="mutationAlgorithm" from="${MutationAlgorithmType?.values()}" optionKey="name" optionValue="displayName" value="${MutationAlgorithmType.CONSERVATIVE.getName()}" />
 </div>
 
 <div class="fieldcontain ">

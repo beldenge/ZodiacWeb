@@ -228,7 +228,6 @@ beans = {
 	}
 	
 	geneticAlgorithm(ConcurrentBasicGeneticAlgorithm) {
-		finalSurvivorCount = grailsApplication.config.genetic.algorithm.finalSurvivorCount
 		crossoverAlgorithm = ref('defaultCrossoverAlgorithm')
 		mutationAlgorithm = ref('defaultMutationAlgorithm')
 		selectionAlgorithm = ref('defaultSelectionAlgorithm')
