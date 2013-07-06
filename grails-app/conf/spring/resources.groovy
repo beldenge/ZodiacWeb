@@ -3,37 +3,41 @@ import com.ciphertool.zodiacengine.dao.SolutionSetDao
 import com.ciphertool.genetics.algorithms.ConcurrentBasicGeneticAlgorithm
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor
 import com.ciphertool.genetics.algorithms.crossover.LowestCommonGroupCrossoverAlgorithm
-import com.ciphertool.zodiacengine.genetic.util.CipherSolutionKnownSolutionFitnessEvaluator;
+import com.ciphertool.zodiacengine.genetic.util.CipherSolutionKnownSolutionFitnessEvaluator
 import com.ciphertool.zodiacengine.genetic.util.CipherSolutionTruncatedFitnessEvaluator
 import com.ciphertool.zodiacengine.genetic.util.CipherSolutionFrequencyFitnessEvaluator
 import com.ciphertool.zodiacengine.genetic.util.CipherSolutionFrequencyTruncatedFitnessEvaluator
 import com.ciphertool.zodiacengine.genetic.util.CipherSolutionFrequencyLengthFitnessEvaluator
-import com.ciphertool.zodiacengine.genetic.util.CipherSolutionUniqueWordFitnessEvaluator;
-import com.ciphertool.zodiacengine.genetic.util.CipherSolutionMatchDistanceFitnessEvaluator;
-import com.ciphertool.zodiacengine.genetic.util.CipherSolutionUniqueWordLengthFitnessEvaluator;
-import com.ciphertool.zodiacengine.genetic.util.CipherSolutionMatchDistanceLengthFitnessEvaluator;
+import com.ciphertool.zodiacengine.genetic.util.CipherSolutionUniqueWordFitnessEvaluator
+import com.ciphertool.zodiacengine.genetic.util.CipherSolutionMatchDistanceFitnessEvaluator
+import com.ciphertool.zodiacengine.genetic.util.CipherSolutionUniqueWordLengthFitnessEvaluator
+import com.ciphertool.zodiacengine.genetic.util.CipherSolutionMatchDistanceLengthFitnessEvaluator
 import com.ciphertool.zodiacengine.dao.CipherDao
 import com.ciphertool.zodiacengine.genetic.dao.WordGeneListDao
 import com.ciphertool.sentencebuilder.dao.FrequencyWordListDao
 import com.ciphertool.sentencebuilder.dao.WordDao
 import com.ciphertool.genetics.Population
 import com.ciphertool.zodiacengine.genetic.util.SolutionBreeder
-import com.ciphertool.genetics.util.MaximizationFitnessComparator
 import com.ciphertool.zodiacengine.gui.controller.ZodiacCipherSolutionController
-import com.ciphertool.zodiacengine.genetic.util.CipherSolutionFitnessEvaluator;
-import com.ciphertool.genetics.algorithms.crossover.ConservativeCrossoverAlgorithm;
-import com.ciphertool.genetics.algorithms.crossover.LiberalCrossoverAlgorithm;
-import com.ciphertool.genetics.algorithms.crossover.ConservativeCentromereCrossoverAlgorithm;
-import com.ciphertool.genetics.util.ChromosomeHelper;
-import com.ciphertool.zodiacengine.genetic.dao.PlaintextSequenceDao;
-import com.ciphertool.genetics.algorithms.mutation.SingleSequenceMutationAlgorithm;
-import com.ciphertool.genetics.algorithms.mutation.LiberalMutationAlgorithm;
-import com.ciphertool.genetics.algorithms.mutation.ConservativeMutationAlgorithm;
-import com.ciphertool.genetics.dao.ExecutionStatisticsDao;
-import com.ciphertool.genetics.algorithms.selection.TruncationSelectionAlgorithm;
-import com.ciphertool.genetics.algorithms.selection.ProbabilisticSelectionAlgorithm;
+import com.ciphertool.zodiacengine.genetic.util.CipherSolutionFitnessEvaluator
+import com.ciphertool.genetics.algorithms.crossover.ConservativeCrossoverAlgorithm
+import com.ciphertool.genetics.algorithms.crossover.LiberalCrossoverAlgorithm
+import com.ciphertool.genetics.algorithms.crossover.ConservativeCentromereCrossoverAlgorithm
+import com.ciphertool.genetics.util.ChromosomeHelper
+import com.ciphertool.zodiacengine.genetic.dao.PlaintextSequenceDao
+import com.ciphertool.genetics.algorithms.mutation.SingleSequenceMutationAlgorithm
+import com.ciphertool.genetics.algorithms.mutation.LiberalMutationAlgorithm
+import com.ciphertool.genetics.algorithms.mutation.ConservativeMutationAlgorithm
+import com.ciphertool.genetics.dao.ExecutionStatisticsDao
+import com.ciphertool.genetics.algorithms.selection.TruncationSelectionAlgorithm
+import com.ciphertool.genetics.algorithms.selection.TournamentSelectionAlgorithm
+import com.ciphertool.genetics.algorithms.selection.ProbabilisticSelectionAlgorithm
+import com.ciphertool.genetics.util.AscendingFitnessComparator
+import com.ciphertool.genetics.algorithms.selection.modes.AlphaSelector
+import com.ciphertool.genetics.algorithms.selection.modes.RandomSelector
+import com.ciphertool.genetics.algorithms.selection.modes.RouletteSelector
+import com.ciphertool.genetics.algorithms.selection.modes.TournamentSelector
 
-//Place your Spring DSL code here
 beans = {
 	
 	taskExecutor(ThreadPoolTaskExecutor) {
@@ -169,7 +173,17 @@ beans = {
 		averageWordLength = grailsApplication.config.language.english.averageWordLength
 	}
 
-	defaultFitnessComparator(MaximizationFitnessComparator) {}
+	defaultFitnessComparator(AscendingFitnessComparator) {}
+	
+	defaultSelector(RouletteSelector) {}
+	
+	tournamentSelector(TournamentSelector) {
+		selectionAccuracy = grailsApplication.config.genetic.algorithm.tournament.selectionAccuracy;
+	}
+	
+	randomSelector(RandomSelector) {}
+	
+	alphaSelector(AlphaSelector) {}
 	
 	population(Population) {
 		breeder = ref('breeder')
@@ -177,6 +191,7 @@ beans = {
 		fitnessComparator = ref('defaultFitnessComparator')
 		taskExecutor = ref('taskExecutor')
 		lifespan = grailsApplication.config.genetic.algorithm.lifespan
+		selector = ref('defaultSelector')
 	}
 	
 	chromosomeHelper(ChromosomeHelper) {
@@ -187,41 +202,50 @@ beans = {
 		fitnessEvaluator = ref('defaultFitnessEvaluator')
 		geneListDao = ref('geneListDao')
 		chromosomeHelper = ref('chromosomeHelper')
+		mutationAlgorithm = ref('defaultMutationAlgorithm')
 	}
 
 	conservativeCrossoverAlgorithm(ConservativeCrossoverAlgorithm) {
 		fitnessEvaluator = ref('defaultFitnessEvaluator')
-		geneListDao = ref('geneListDao')
+		mutationAlgorithm = ref('defaultMutationAlgorithm')
 	}
 	
 	defaultCrossoverAlgorithm(LowestCommonGroupCrossoverAlgorithm) {
 		fitnessEvaluator = ref('defaultFitnessEvaluator')
-		geneListDao = ref('geneListDao')
+		mutationAlgorithm = ref('defaultMutationAlgorithm')
 	}
 	
 	conservativeCentromereCrossoverAlgorithm(ConservativeCentromereCrossoverAlgorithm) {
 		fitnessEvaluator = ref('defaultFitnessEvaluator')
-		geneListDao = ref('geneListDao')
+		mutationAlgorithm = ref('defaultMutationAlgorithm')
 	}
 	
 	sequenceDao(PlaintextSequenceDao) {}
 	
 	defaultMutationAlgorithm(SingleSequenceMutationAlgorithm) {
 		sequenceDao = ref('sequenceDao')
+		maxMutationsPerChromosome = grailsApplication.config.genetic.algorithm.maxMutationsPerChromosome
 	}
 	
 	liberalMutationAlgorithm(LiberalMutationAlgorithm) {
 		geneListDao = ref('geneListDao')
 		chromosomeHelper = ref('chromosomeHelper')
+		maxMutationsPerChromosome = grailsApplication.config.genetic.algorithm.maxMutationsPerChromosome
 	}
 	
 	conservativeMutationAlgorithm(ConservativeMutationAlgorithm) {
 		geneListDao = ref('geneListDao')
+		maxMutationsPerChromosome = grailsApplication.config.genetic.algorithm.maxMutationsPerChromosome
 	}
 	
 	defaultSelectionAlgorithm(ProbabilisticSelectionAlgorithm) {}
 	
 	truncationSelectionAlgorithm(TruncationSelectionAlgorithm) {}
+	
+	tournamentSelectionAlgorithm(TournamentSelectionAlgorithm) {
+		groupSize = grailsApplication.config.genetic.algorithm.tournament.groupSize
+		tournamentSelector = ref('tournamentSelector')
+	}
 	
 	executionStatisticsDao(ExecutionStatisticsDao) {
 		sessionFactory = ref('sessionFactory')
@@ -255,5 +279,6 @@ beans = {
 		mutationAlgorithmDefault = ref('defaultMutationAlgorithm')
 		selectionAlgorithmDefault = ref('defaultSelectionAlgorithm')
 		knownSolutionFitnessEvaluator = ref('cipherSolutionKnownSolutionFitnessEvaluator')
+		selectorDefault = ref('defaultSelector')
 	}
 }

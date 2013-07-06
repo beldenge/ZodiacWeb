@@ -112,13 +112,16 @@ taskExecutor.queueCapacity=10000
 // ---------------------------------------
 // Genetic algorithm properties
 // ---------------------------------------
-genetic.population.size=100
+genetic.population.size=1000
 genetic.algorithm.lifespan=-1
 genetic.algorithm.survivalRate=0.95
 genetic.algorithm.mutationRate=0.01
 genetic.algorithm.crossoverRate=0.05
 genetic.algorithm.maxGenerations=50
 genetic.algorithm.finalSurvivorCount=10
+genetic.algorithm.tournament.groupSize=5
+genetic.algorithm.maxMutationsPerChromosome=5
+genetic.algorithm.tournament.selectionAccuracy=0.9
 
 
 // ---------------------------------------
