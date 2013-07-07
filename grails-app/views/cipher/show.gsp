@@ -6,6 +6,9 @@
 		<meta name="layout" content="main">
 		<g:set var="entityName" value="${message(code: 'cipher.label', default: 'Cipher')}" />
 		<title><g:message code="default.show.label" args="[entityName]" /></title>
+		<g:javascript library="jquery" />
+		<g:javascript src="cipher.js" />
+		<link rel="stylesheet" href="${resource(dir: 'css', file: 'cipher.css')}" type="text/css">
 	</head>
 	<body>
 		<a href="#show-cipher" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
@@ -48,10 +51,13 @@
 					<span id="ciphertextCharacters-label" class="property-label"><g:message code="cipher.ciphertextCharacters.label" default="Ciphertext Characters" /></span>
 					
 					<table>
+					<th colspan="${cipherInstance.columns}">
+						Hover over a character to see all matching ciphertext characters in a red border.
+					</th>
 					<tr>
 					<g:each in="${ (1..cipherInstance.ciphertextCharacters.size()) }">
 						<g:set var="c" value="${cipherInstance.ciphertextCharacters.getAt(it - 1)}" />
-						<td>
+						<td class="character ${c.value}">
 						<span class="property-value" aria-labelledby="ciphertextCharacters-label">
 							<g:link controller="ciphertext" action="show" params="[cipherId: c?.id.cipher.id, ciphertextId: c?.id.ciphertextId]">
 								<g:img dir="images/cipher" file="${c.value.encodeAsHTML()}.gif" />

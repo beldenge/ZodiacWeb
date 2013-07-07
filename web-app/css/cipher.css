@@ -1,0 +1,38 @@
+td.character {
+	border: 2px solid white;
+	padding: 0em 0em;
+	text-align: center;
+}
+
+.fieldcontain .property-value {
+	margin-left: 0%;
+}
+
+tr>td:first-child {
+	padding-left: 0em;
+}
+
+tr>td:last-child {
+	padding-right: 0em;
+}
+
+td.character.highlighted {
+	border: 2px solid red;
+}
+
+table {
+	width: 90%;
+	border-collapse: separate;
+}
+
+tr:hover {
+	background: none;
+}
+
+td.match {
+	border: 2px solid #E1F2B6;
+}
+
+.character a {
+	text-decoration:none;
+}

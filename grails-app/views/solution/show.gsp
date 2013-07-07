@@ -6,6 +6,9 @@
 		<meta name="layout" content="main">
 		<g:set var="entityName" value="${message(code: 'solution.label', default: 'Solution')}" />
 		<title><g:message code="default.show.label" args="[entityName]" /></title>
+		<g:javascript library="jquery" />
+		<g:javascript src="cipher.js" />
+		<link rel="stylesheet" href="${resource(dir: 'css', file: 'cipher.css')}" type="text/css">
 	</head>
 	<body>
 		<a href="#show-solution" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
@@ -73,22 +76,25 @@
 				</li>
 			
 				<li class="fieldcontain">
-					<span id="plaintextCharacters-label" class="property-label"><g:message code="solution.plaintextCharacters.label" default="Plaintext Characters" /></span>
-					
+					<span id="plaintextCharacters-label" class="property-label">
+						<g:message code="solution.plaintextCharacters.label" default="Plaintext Characters" />
+					</span>				
 					<table>
+					<th colspan="${solutionInstance.cipher.columns}">
+						Green borders represent plaintext matches which were detected.  Hover over a character to see all matching ciphertext characters in a red border.
+					</th>
 					<tr>
 					<g:if test="${solutionInstance.plaintextCharacters != null && solutionInstance.plaintextCharacters.size() > 0}">
 						<g:each in="${ (1..solutionInstance.plaintextCharacters.size()) }">
 							<g:set var="p" value="${solutionInstance.plaintextCharacters.getAt(it - 1)}" />
-							<td>
+							<g:set var="classes" value="${'character ' + solutionInstance.cipher.ciphertextCharacters.getAt(it - 1).value}" />
+							<g:if test="${p.hasMatch}">
+								<g:set var="classes" value="${classes + ' match'}" />
+							</g:if>
+							<td class="${classes}">
 							<span class="property-value" aria-labelledby="plaintextCharacters-label">
 								<g:link controller="plaintext" action="show" params="[solutionSetId: p?.id.solution.id.solutionSet.id, solutionId: p?.id.solution.id.solutionId, ciphertextId: p?.id.ciphertextId]">
-									<g:if test="${p.hasMatch}">
-										[${p.value.encodeAsHTML()}]
-									</g:if>
-									<g:else>
-										${p.value.encodeAsHTML()}
-									</g:else>
+									${p.value.encodeAsHTML()}
 								</g:link>
 							</span>
 							</td>
