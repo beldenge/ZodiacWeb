@@ -1,3 +1,5 @@
+<%@ page import="grails.converters.JSON" %>
+
 <!DOCTYPE html>
 <html>
 	<head>
@@ -65,6 +67,28 @@
 					$('[name="generations"]').removeAttr("disabled");
 				}
 			}
+			
+			function updateKnownSolutionCheckBox() {
+				//We need to be able to loop over the cipher instances in javascript, so serialize it into JSON
+				var ciphersJsonObject = ${cipherInstanceMap as JSON};
+
+				var hasKnownSolution = false;
+				for (cipher in ciphersJsonObject) {
+					if (ciphersJsonObject[cipher].name == $('#cipherName').val() && ciphersJsonObject[cipher].hasKnownSolution) {
+						hasKnownSolution = true;
+					}
+				}
+						
+				if (hasKnownSolution) {
+					$('#compareToKnownSolution').removeAttr("disabled");
+				}
+				else {
+					$('#compareToKnownSolution').attr("disabled", "disabled");
+				}
+			}
+			
+			//Call this on page load in case the check box should be disabled immediately
+			updateKnownSolutionCheckBox();
 		</g:javascript>
 		<link rel="stylesheet" href="${resource(dir: 'css', file: 'run.css')}" type="text/css">
 	</head>

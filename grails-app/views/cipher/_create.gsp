@@ -23,3 +23,11 @@
 	</label>
 	<g:field type="number" name="columns" value="${cipherInstance.columns}" />
 </div>
+
+<div class="fieldcontain ${hasErrors(bean: cipherInstance, field: 'hasKnownSolution', 'error')} ">
+	<label for="columns">
+		<g:message code="cipher.hasKnownSolution.label" default="Has Known Solution" />
+		
+	</label>
+	<g:field type="checkbox" name="hasKnownSolution" value="${cipherInstance.hasKnownSolution}" />
+</div>

@@ -9,7 +9,7 @@
 		<g:message code="genetic.algorithm.cipher.label" default="Cipher to Solve for" />
 		
 	</label>
-	<g:select name="cipherName" from="${cipherInstanceList}" value="zodiac408" optionKey="name" optionValue="name" />
+	<g:select name="cipherName" from="${cipherInstanceMap.values()}" value="zodiac408" optionKey="name" optionValue="name" onchange="updateKnownSolutionCheckBox()" />
 </div>
 
 <div class="fieldcontain">
@@ -66,6 +66,14 @@
 		
 	</label>
 	<g:field type="number" name="mutationRate" value="${grailsApplication.config.genetic.algorithm.mutationRate}" min="0" max="1" step="0.001"/>
+</div>
+
+<div class="fieldcontain">
+	<label for="maxMutationsPerChromosome">
+		<g:message code="genetic.algorithm.max.mutations.label" default="Max Mutations Per Chromosome" />
+		
+	</label>
+	<g:field type="number" name="maxMutationsPerChromosome" value="${grailsApplication.config.genetic.algorithm.maxMutationsPerChromosome}" min="1" max="100" step="1"/>
 </div>
 
 <div class="fieldcontain">

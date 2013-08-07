@@ -13,7 +13,7 @@ import com.ciphertool.zodiacengine.genetic.util.CipherSolutionMatchDistanceFitne
 import com.ciphertool.zodiacengine.genetic.util.CipherSolutionUniqueWordLengthFitnessEvaluator
 import com.ciphertool.zodiacengine.genetic.util.CipherSolutionMatchDistanceLengthFitnessEvaluator
 import com.ciphertool.zodiacengine.dao.CipherDao
-import com.ciphertool.zodiacengine.genetic.dao.WordGeneListDao
+import com.ciphertool.zodiacengine.genetic.dao.ForcedWordGeneListDao
 import com.ciphertool.sentencebuilder.dao.FrequencyWordListDao
 import com.ciphertool.sentencebuilder.dao.WordDao
 import com.ciphertool.genetics.Population
@@ -37,6 +37,7 @@ import com.ciphertool.genetics.algorithms.selection.modes.AlphaSelector
 import com.ciphertool.genetics.algorithms.selection.modes.RandomSelector
 import com.ciphertool.genetics.algorithms.selection.modes.RouletteSelector
 import com.ciphertool.genetics.algorithms.selection.modes.TournamentSelector
+import com.ciphertool.zodiacengine.gui.common.GeneticStrategyBuilder
 
 beans = {
 	
@@ -60,7 +61,7 @@ beans = {
 	wordListDao(FrequencyWordListDao, ref('wordDao')) {
 	}
 	
-	geneListDao(WordGeneListDao) {
+	geneListDao(ForcedWordGeneListDao) {
 		wordListDao = ref('wordListDao')
 	}
 	
@@ -264,6 +265,16 @@ beans = {
 		sessionFactory = ref('sessionFactory')
 	}
 	
+	strategyBuilder(GeneticStrategyBuilder) {
+		cipherDao = ref ('cipherDao')
+		fitnessEvaluatorDefault = ref('defaultFitnessEvaluator')
+		crossoverAlgorithmDefault = ref('defaultCrossoverAlgorithm')
+		mutationAlgorithmDefault = ref('defaultMutationAlgorithm')
+		selectionAlgorithmDefault = ref('defaultSelectionAlgorithm')
+		knownSolutionFitnessEvaluator = ref('cipherSolutionKnownSolutionFitnessEvaluator')
+		selectorDefault = ref('defaultSelector')
+	}
+	
 	cipherSolutionService(GeneticCipherSolutionService) {
 		geneticAlgorithm = ref('geneticAlgorithm')
 		solutionSetDao = ref('solutionSetDao')
@@ -273,12 +284,5 @@ beans = {
 
 	cipherSolutionController(ZodiacCipherSolutionController) {
 		cipherSolutionService = ref('cipherSolutionService')
-		cipherDao = ref ('cipherDao')
-		fitnessEvaluatorDefault = ref('defaultFitnessEvaluator')
-		crossoverAlgorithmDefault = ref('defaultCrossoverAlgorithm')
-		mutationAlgorithmDefault = ref('defaultMutationAlgorithm')
-		selectionAlgorithmDefault = ref('defaultSelectionAlgorithm')
-		knownSolutionFitnessEvaluator = ref('cipherSolutionKnownSolutionFitnessEvaluator')
-		selectorDefault = ref('defaultSelector')
 	}
 }

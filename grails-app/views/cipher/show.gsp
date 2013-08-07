@@ -48,6 +48,13 @@
 				</li>
 				
 				<li class="fieldcontain">
+					<span id="hasKnownSolution-label" class="property-label"><g:message code="cipher.hasKnownSolution.label" default="Has Known Solution" /></span>
+					
+						<span class="property-value" aria-labelledby="hasKnownSolution-label"><g:fieldValue bean="${cipherInstance}" field="hasKnownSolution"/></span>
+					
+				</li>
+				
+				<li class="fieldcontain">
 					<span id="ciphertextCharacters-label" class="property-label"><g:message code="cipher.ciphertextCharacters.label" default="Ciphertext Characters" /></span>
 					
 					<table>

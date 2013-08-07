@@ -32,6 +32,7 @@
 						
 						<g:sortableColumn property="columns" title="${message(code: 'cipher.columns.label', default: 'Columns')}" />
 					
+						<g:sortableColumn property="hasKnownSolution" title="${message(code: 'cipher.hasKnownSolution.label', default: 'Has Known Solution')}" />
 					</tr>
 				</thead>
 				<tbody>
@@ -46,6 +47,7 @@
 						
 						<td>${fieldValue(bean: cipherInstance, field: "columns")}</td>
 					
+						<td>${fieldValue(bean: cipherInstance, field: "hasKnownSolution")}</td>
 					</tr>
 				</g:each>
 				</tbody>
